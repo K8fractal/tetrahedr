@@ -10,8 +10,11 @@ interface Props {
     if(canvasRef.current){
       canvasCtxRef.current = canvasRef.current.getContext('2d');
       let ctx = canvasCtxRef.current;
-      ctx!.fillRect(value,value,10,30);
-      /* Only updates when I change and save. Can get multiple boxes on Canvas. Why?? */
+      // clear the canvas, since React reuses the canvas component in dev
+      ctx?.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height); 
+      
+      // A stub drawing
+      ctx?.fillRect(value,value,50,30); 
     }
 
     return <canvas ref={canvasRef}/>

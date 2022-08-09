@@ -9,7 +9,7 @@ function App() {
         <p>
           Tetrahedr
         </p>
-        <Canvas value={40}/>
+        <Canvas value={50}/>
         <p>After the Canvas</p>
       </header>
     </div>
