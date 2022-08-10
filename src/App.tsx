@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Canvas from './Canvas';
+import {Canvas, useFrame } from '@react-three/fiber'
 
 function App() {
   return (
@@ -9,7 +9,9 @@ function App() {
         <p>
           Tetrahedr
         </p>
-        <Canvas value={50}/>
+        <Canvas>
+        <ambientLight />
+        </Canvas>
         <p>After the Canvas</p>
       </header>
     </div>
