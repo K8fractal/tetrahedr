@@ -1,16 +1,19 @@
 import React from 'react';
 import './App.css';
-import {Canvas, useFrame } from '@react-three/fiber'
+import {Canvas} from '@react-three/fiber'
 import Cube from './Cube';
 
 function App() {
   return (
+    
     <div className="App">
+      
+
       <header className="App-header">
         <p>
           Tetrahedr
         </p>
-        <Canvas>
+        <Canvas className='Three-canvas'>
           <ambientLight intensity={0.5}/>
           <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
           <pointLight position={[-10, -10, -10]} />

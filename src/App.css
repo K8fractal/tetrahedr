@@ -2,19 +2,9 @@
   text-align: center;
 }
 canvas {
+  /*border: 1px solid red; DO NOT USE, causes canvas size to increase indefinetly, see https://github.com/pmndrs/react-three-fiber/issues/1684*/
+  background-color: blueviolet;
   height: 600px;
-  border: 1px solid
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
 }
 
 .App-header {
