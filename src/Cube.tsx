@@ -5,13 +5,16 @@ import { MeshProps, useFrame } from '@react-three/fiber'
 const Cube = (props: MeshProps) => {
     const cubeRef= useRef<Mesh>(null); //Initally null, will be set in the object return.
 
+    const [paused, click] = useState(false); 
+
     //by the time this gets called, cubeRef will point to the mesh object.
-    useFrame((state,delta) => (cubeRef.current!.rotation.x += 0.01))
+    useFrame((state,delta) => (cubeRef.current!.rotation.x += paused? 0:0.01))
 
     return (
         <mesh
         {...props}
-        ref = {cubeRef} >
+        ref = {cubeRef} 
+        onClick={(event)=>click(!paused)}>
             <boxGeometry args = {[1,1,1]}/>
             <meshStandardMaterial color='green'/>
         </mesh>

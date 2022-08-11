@@ -19,6 +19,7 @@ function App() {
           <pointLight position={[-10, -10, -10]} />
           
           <Cube position={[-1,0,0]}/>
+          <Cube position={[1,0,0]}/>
         </Canvas>
         <p>After the Canvas</p>
       </header>
