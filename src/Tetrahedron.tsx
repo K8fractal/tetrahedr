@@ -25,7 +25,7 @@ const Tetrahedron = (props: MeshProps) => {
         ref = {cubeRef} 
         onClick={(event)=>click(!paused)}>
             <polyhedronGeometry args = {[verticesOfTetra, indicesOfFaces,1,0]}/>
-            <meshStandardMaterial color='grey'/>
+            <meshStandardMaterial color='blueviolet'/>
         </mesh>
     )
 
