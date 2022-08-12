@@ -5,13 +5,13 @@ import { MeshProps, useFrame } from '@react-three/fiber'
 const Tetrahedron = (props: MeshProps) => {
     const cubeRef= useRef<Mesh>(null); //Initally null, will be set in the object return.
 
-    const [paused, click] = useState(false); 
+    const [paused, click] = useState(true); 
 
     //by the time this gets called, cubeRef will point to the mesh object.
-    useFrame((state,delta) => (cubeRef.current!.rotation.x += paused? 0:0.01))
+    useFrame((state,delta) => (cubeRef.current!.rotation.x = paused? 0:Math.PI/2))
 
     const verticesOfTetra = [
-        0,0,0,      1,1,1,      1,0,1,      1,1,0,
+        0,0,0,      1,1,1,      1,-1,1,      1,1,-1,
       ];
     
     const indicesOfFaces = [
@@ -23,8 +23,9 @@ const Tetrahedron = (props: MeshProps) => {
         <mesh
         {...props}
         ref = {cubeRef} 
-        onClick={(event)=>click(!paused)}>
-            <polyhedronGeometry args = {[verticesOfTetra, indicesOfFaces,1,0]}/>
+        onClick={(event)=>click(!paused)}
+        >
+            <polyhedronGeometry args = {[verticesOfTetra, indicesOfFaces,Math.sqrt(3)/2,0]}/>
             <meshStandardMaterial color='blueviolet'/>
         </mesh>
     )
