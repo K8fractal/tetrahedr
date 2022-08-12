@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import {Canvas} from '@react-three/fiber'
 import Cube from './Cube';
+import Tetrahedron from './Tetrahedron';
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
           <pointLight position={[-10, -10, -10]} />
           
           <Cube position={[-1,0,0]}/>
-          <Cube position={[1,0,0]}/>
+          <Tetrahedron position={[1,0,0]}/>
         </Canvas>
         <p>After the Canvas</p>
       </header>
