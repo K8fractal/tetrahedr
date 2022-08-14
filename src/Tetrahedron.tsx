@@ -6,9 +6,11 @@ const Tetrahedron = (props: MeshProps) => {
     const cubeRef= useRef<Mesh>(null); //Initally null, will be set in the object return.
 
     const [paused, click] = useState(true); 
+    const [rotationX, setRotationX] = useState(0);
+    const [rotationY, setRotationY] = useState(0);
 
     //by the time this gets called, cubeRef will point to the mesh object.
-    useFrame((state,delta) => (cubeRef.current!.rotation.x = paused? 0:Math.PI/2))
+    //useFrame((state,delta) => (cubeRef.current!.rotation.x = paused? 0:Math.PI/2))
 
     const verticesOfTetra = [
         0,0,0,      1,1,1,      1,-1,1,      1,1,-1,
@@ -23,7 +25,9 @@ const Tetrahedron = (props: MeshProps) => {
         <mesh
         {...props}
         ref = {cubeRef} 
-        onClick={(event)=>click(!paused)}
+        onClick={(event)=>/*click(!paused)*/setRotationX(rotationX+Math.PI/2)}
+        onContextMenu = {(event)=>setRotationY(rotationY+Math.PI/2)}
+        rotation = {[rotationX,rotationY,0]}
         >
             <polyhedronGeometry args = {[verticesOfTetra, indicesOfFaces,Math.sqrt(3)/2,0]}/>
             <meshStandardMaterial color='blueviolet'/>

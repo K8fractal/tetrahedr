@@ -8,7 +8,7 @@ const Cube = (props: MeshProps) => {
     const [paused, click] = useState(true); 
 
     //by the time this gets called, cubeRef will point to the mesh object.
-    useFrame((state,delta) => (cubeRef.current!.rotation.x = paused? 0:Math.PI/4))
+    useFrame((state,delta) => (cubeRef.current!.rotation.x = paused? 0:0))
 
     return (
         <mesh
