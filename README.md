@@ -1,3 +1,8 @@
+# Tetrahedr
+
+This is my learning project for [Three.js](https://threejs.org/). I was inspired by to create a virtual building block project based on the geometry of [Shashibo](https://funinmotiontoys.com/pages/getshashibo-home). This project is still in development.
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
