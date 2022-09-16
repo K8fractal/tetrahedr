@@ -24,7 +24,7 @@ function App() {
           <Cube position={[2,0,0]}/>
           <Tetrahedron position={[1,0,0]}/>
         </Canvas>
-        <p>After the Canvas</p>
+        <p>Left and Right Click to Rotate</p>
       </header>
     </div>
   );
