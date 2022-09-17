@@ -1,9 +1,10 @@
-import { useRef, useState } from 'react'
-import { Mesh } from 'three'
+import { useEffect, useRef, useState } from 'react'
+import { BufferAttribute, Mesh, PolyhedronBufferGeometry } from 'three'
 import { MeshProps, useFrame } from '@react-three/fiber'
+import { useTexture } from '@react-three/drei';
 
 const Tetrahedron = (props: MeshProps) => {
-    const cubeRef= useRef<Mesh>(null); //Initally null, will be set in the object return.
+    const tetraRef= useRef<Mesh>(null); //Initally null, will be set in the object return.
 
     const [paused, click] = useState(true); 
     const [rotationX, setRotationX] = useState(0);
@@ -21,16 +22,38 @@ const Tetrahedron = (props: MeshProps) => {
         1,2,3,    3,0,1,
     ];
 
+   // const [colorMap]= useTexture(['textures/ceramic_32_basecolor-1K.png']);
+    const [colorMap]= useTexture(['textures/test.png']);
+
+ /*   const textureProps = useTexture({
+        map: 'textures/ceramic_32_basecolor-1K.png',
+        normalMap: 'textures/ceramic_32_normal-1K.png',
+        roughnessMap: 'textures/ceramic_32_roughness-1K.png',
+        aoMap: 'textures/ceramic_32_ambientocclusion-1K.png',
+      })*/
+
+      useEffect(()=> {
+        console.log("useEffect happened");
+      if(tetraRef.current){ console.log("Reference Exists")}
+      tetraRef.current?.geometry.setAttribute("uv",new BufferAttribute(new Float32Array(
+        [0.5, 0.5,     0, 1,      0, 0.5, /*equilateralish face*/
+        0.5, 0.5,      0, 0.5,      0.5, 0,
+        0,0,      0, 0.5,      0.5 , 0, /* Right Isosceles Triangle Face*/
+        0.5, 0.5,          1, 0,      0.5, 0 /*equilateralish face*/])
+        ,2))
+     
+      });
+      
     return (
         <mesh
         {...props}
-        ref = {cubeRef} 
+        ref = {tetraRef} 
         onClick={(event)=>/*click(!paused)*/setRotationX(rotationX+Math.PI/2)}
         onContextMenu = {(event)=>setRotationY(rotationY+Math.PI/2)}
         rotation = {[rotationX,rotationY,0]}
         >
-            <polyhedronGeometry args = {[verticesOfTetra, indicesOfFaces,Math.sqrt(3)/2,0]}/>
-            <meshStandardMaterial color='blueviolet'/>
+             <polyhedronGeometry args = {[verticesOfTetra, indicesOfFaces,Math.sqrt(3)/2,0]} /> 
+            <meshStandardMaterial color={'white'} map={colorMap}/>
         </mesh>
     )
 

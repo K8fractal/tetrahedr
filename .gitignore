@@ -12,7 +12,7 @@
 /build
 
 # images
-/textures
+/public/textures
 
 # misc
 .DS_Store
