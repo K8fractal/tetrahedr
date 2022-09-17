@@ -33,8 +33,8 @@ const Tetrahedron = (props: MeshProps) => {
       })*/
 
       useEffect(()=> {
-        console.log("useEffect happened");
-      if(tetraRef.current){ console.log("Reference Exists")}
+    //     console.log("useEffect happened");
+    //   if(tetraRef.current){ console.log("Reference Exists")}
       tetraRef.current?.geometry.setAttribute("uv",new BufferAttribute(new Float32Array(
         [0.5, 0.5,     0, 1,      0, 0.5, /*equilateralish face*/
         0.5, 0.5,      0, 0.5,      0.5, 0,
