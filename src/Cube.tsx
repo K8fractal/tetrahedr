@@ -17,7 +17,7 @@ const Cube = (props: MeshProps) => {
         onClick={(event)=>click(!paused)}
         >
             <boxGeometry args = {[1,1,1]}/>
-            <meshStandardMaterial color='green' transparent={true} opacity={0.5}/>
+            <meshStandardMaterial color='gray' transparent={true} opacity={0.5}/>
         </mesh>
     )
 

@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
-import { BufferAttribute, Mesh, PolyhedronBufferGeometry } from 'three'
+import { BufferAttribute, Mesh, PolyhedronBufferGeometry, Texture } from 'three'
 import { MeshProps, useFrame } from '@react-three/fiber'
 import { useTexture } from '@react-three/drei';
 
 const Tetrahedron = (props: MeshProps) => {
     const tetraRef= useRef<Mesh>(null); //Initally null, will be set in the object return.
+    const proportional = true;// Which type of texture. Might change in future.
 
     const [paused, click] = useState(true); 
     const [rotationX, setRotationX] = useState(0);
@@ -22,8 +23,9 @@ const Tetrahedron = (props: MeshProps) => {
         1,2,3,    3,0,1,
     ];
 
-   // const [colorMap]= useTexture(['textures/ceramic_32_basecolor-1K.png']);
-    const [colorMap]= useTexture(['textures/test.png']);
+   // const [colorMap]= useTexture(['textures/ceramic_32_basecolor-1K.png'])
+const [proportionalMap,testMap] = useTexture(['textures/proportional.png','textures/test.png'])
+
 
  /*   const textureProps = useTexture({
         map: 'textures/ceramic_32_basecolor-1K.png',
@@ -35,14 +37,27 @@ const Tetrahedron = (props: MeshProps) => {
       useEffect(()=> {
     //     console.log("useEffect happened");
     //   if(tetraRef.current){ console.log("Reference Exists")}
+    if(proportional){
+    //For a proportional texture
+    tetraRef.current?.geometry.setAttribute("uv",new BufferAttribute(new Float32Array(
+        [0.427, 0.427,     0.354, 0.854,      0, 0.5, /*equilateralish face*/
+        0.427, 0.427,      0, 0.5,      0.5, 0,
+        0,0,      0, 0.5,      0.5 , 0, /* Right Isosceles Triangle Face*/
+        0.427, 0.427,          0.854, 0.354,      0.5, 0 /*equilateralish face*/])
+        ,2));
+    } else {
+    //For a right isoceles texture
       tetraRef.current?.geometry.setAttribute("uv",new BufferAttribute(new Float32Array(
         [0.5, 0.5,     0, 1,      0, 0.5, /*equilateralish face*/
         0.5, 0.5,      0, 0.5,      0.5, 0,
         0,0,      0, 0.5,      0.5 , 0, /* Right Isosceles Triangle Face*/
         0.5, 0.5,          1, 0,      0.5, 0 /*equilateralish face*/])
-        ,2))
-     
+        ,2));
+      }
+    
+
       });
+      
       
     return (
         <mesh
@@ -53,7 +68,7 @@ const Tetrahedron = (props: MeshProps) => {
         rotation = {[rotationX,rotationY,0]}
         >
              <polyhedronGeometry args = {[verticesOfTetra, indicesOfFaces,Math.sqrt(3)/2,0]} /> 
-            <meshStandardMaterial color={'white'} map={colorMap}/>
+            <meshStandardMaterial color={'white'} map={proportional?proportionalMap:testMap}/>
         </mesh>
     )
 
