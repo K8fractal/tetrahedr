@@ -8,8 +8,8 @@ const Tetrahedron = (props: MeshProps) => {
     const proportional = true;// Which type of texture. Might change in future.
 
     const [paused, click] = useState(true); 
-    const [rotationX, setRotationX] = useState(0);
-    const [rotationY, setRotationY] = useState(0);
+    const [rotationX, setRotationX] = useState(Math.PI);
+    const [rotationY, setRotationY] = useState(Math.PI/2);
 
     //by the time this gets called, cubeRef will point to the mesh object.
     //useFrame((state,delta) => (cubeRef.current!.rotation.x = paused? 0:Math.PI/2))
@@ -40,17 +40,17 @@ const [proportionalMap,testMap] = useTexture(['textures/proportional.png','textu
     if(proportional){
     //For a proportional texture
     tetraRef.current?.geometry.setAttribute("uv",new BufferAttribute(new Float32Array(
-        [0.427, 0.427,     0.354, 0.854,      0, 0.5, /*equilateralish face*/
-        0.427, 0.427,      0, 0.5,      0.5, 0,
-        0,0,      0, 0.5,      0.5 , 0, /* Right Isosceles Triangle Face*/
-        0.427, 0.427,          0.854, 0.354,      0.5, 0 /*equilateralish face*/])
+        [0, 0.5,        0.427, 0.427,   0.354, 0.854,  /*equilateralish face*/
+        0.5,0,          0, 0.5,         0.427, 0.427,
+        0,0.5,          0.5, 0,         0 , 0, /* Right Isosceles Triangle Face*/
+        0.427, 0.427,   0.854, 0.354,   0.5, 0 /*equilateralish face*/])
         ,2));
     } else {
     //For a right isoceles texture
       tetraRef.current?.geometry.setAttribute("uv",new BufferAttribute(new Float32Array(
         [0.5, 0.5,     0, 1,      0, 0.5, /*equilateralish face*/
         0.5, 0.5,      0, 0.5,      0.5, 0,
-        0,0,      0, 0.5,      0.5 , 0, /* Right Isosceles Triangle Face*/
+        0,0,      0, 0.5,      0.5, 0, /* Right Isosceles Triangle Face*/
         0.5, 0.5,          1, 0,      0.5, 0 /*equilateralish face*/])
         ,2));
       }
