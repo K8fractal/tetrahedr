@@ -1,4 +1,4 @@
-import { MeshProps } from "@react-three/fiber";
+import { BufferGeometryProps, MeshProps } from "@react-three/fiber";
 import { Vector3 } from "three";
 
 interface TetrahedronProps extends MeshProps {
@@ -6,7 +6,42 @@ interface TetrahedronProps extends MeshProps {
   color?: string;
 }
 
-const IrregularTetrahedron = (props: TetrahedronProps) => {
+interface TetrahedronGeometryProps extends BufferGeometryProps {
+  vertices: Vector3[];
+}
+
+export const IrregularTetrahedronGeometry = (
+  props: TetrahedronGeometryProps
+) => {
+  const indicesOfFaces = [2, 1, 0, 0, 3, 2, 1, 2, 3, 3, 0, 1];
+
+  const vertices = computeFullVertexArray(props.vertices, indicesOfFaces);
+
+  const verticesForBuffer = new Float32Array(flattenVector3Array(vertices));
+  const normalsForBuffer = new Float32Array(
+    flattenVector3Array(computeNormals(vertices))
+  );
+
+  return (
+    <bufferGeometry attach="geometry">
+      <bufferAttribute
+        attach="attributes-position"
+        array={verticesForBuffer}
+        itemSize={3}
+        count={12}
+      />
+
+      <bufferAttribute
+        attach="attributes-normal"
+        array={normalsForBuffer}
+        itemSize={3}
+        count={12}
+      />
+    </bufferGeometry>
+  );
+};
+
+export const IrregularTetrahedron = (props: TetrahedronProps) => {
   //const verticesOfTetra = [0, 0, 0,   1, 1, 1,    1, -1, 1,   1, 0, 0];
 
   const verticesOfTetra = props.vertices
@@ -28,21 +63,7 @@ const IrregularTetrahedron = (props: TetrahedronProps) => {
 
   return (
     <mesh {...props}>
-      <bufferGeometry attach="geometry">
-        <bufferAttribute
-          attach="attributes-position"
-          array={verticesForBuffer}
-          itemSize={3}
-          count={12}
-        />
-
-        <bufferAttribute
-          attach="attributes-normal"
-          array={normalsForBuffer}
-          itemSize={3}
-          count={12}
-        />
-      </bufferGeometry>
+      <IrregularTetrahedronGeometry vertices={verticesOfTetra} />
       <meshStandardMaterial color={props.color ? props.color : "green"} />
     </mesh>
   );
@@ -110,5 +131,3 @@ export function flattenVector3Array(vectors: Vector3[]): number[] {
   });
   return result;
 }
-
-export default IrregularTetrahedron;

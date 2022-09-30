@@ -6,7 +6,7 @@ import Cube from "./Cube";
 import Tetrahedron from "./Tetrahedron";
 import Facet from "./Facet";
 import Triangle from "./Triangle";
-import IrregularTetrahedron from "./irregularTetrahedron";
+import { IrregularTetrahedron } from "./irregularTetrahedron";
 import { Vector3 } from "three";
 
 function App() {
