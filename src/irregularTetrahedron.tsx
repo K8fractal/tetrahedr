@@ -13,7 +13,7 @@ interface TetrahedronGeometryProps extends BufferGeometryProps {
 export const IrregularTetrahedronGeometry = (
   props: TetrahedronGeometryProps
 ) => {
-  const indicesOfFaces = [2, 1, 0, 0, 3, 2, 1, 2, 3, 3, 0, 1];
+  const indicesOfFaces = [1, 2, 3, 3, 0, 1, 2, 1, 0, 0, 3, 2];
 
   const vertices = computeFullVertexArray(props.vertices, indicesOfFaces);
 
@@ -52,14 +52,14 @@ export const IrregularTetrahedron = (props: TetrahedronProps) => {
         new Vector3(1, -1, 1),
         new Vector3(1, 0, 0),
       ];
-  const indicesOfFaces = [2, 1, 0, 0, 3, 2, 1, 2, 3, 3, 0, 1];
+  // const indicesOfFaces = [2, 1, 0, 0, 3, 2, 1, 2, 3, 3, 0, 1];
 
-  const vertices = computeFullVertexArray(verticesOfTetra, indicesOfFaces);
+  // const vertices = computeFullVertexArray(verticesOfTetra, indicesOfFaces);
 
-  const verticesForBuffer = new Float32Array(flattenVector3Array(vertices));
-  const normalsForBuffer = new Float32Array(
-    flattenVector3Array(computeNormals(vertices))
-  );
+  // const verticesForBuffer = new Float32Array(flattenVector3Array(vertices));
+  // const normalsForBuffer = new Float32Array(
+  //   flattenVector3Array(computeNormals(vertices))
+  // );
 
   return (
     <mesh {...props}>

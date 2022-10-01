@@ -21,7 +21,7 @@ function App() {
           <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
           <pointLight position={[-10, -10, -10]} />
 
-          <Cube position={[0, 0, 0]} scale={0.95} />
+          {/* <Cube position={[0, 0, 0]} scale={0.95} /> */}
           {/* <Triangle
             vertices={[1, 1, 1, 1, -1, 1, 1, 0, 0]}
             position={[0, 0, 0]}
@@ -29,7 +29,7 @@ function App() {
           <IrregularTetrahedron
             position={[0, 0, 0]}
             scale={0.5}
-            quaternion={[0, 0, 1, 0]}
+            quaternion={[1, 0, 0, 0]}
             color="red"
           />
           <IrregularTetrahedron
@@ -44,7 +44,7 @@ function App() {
             quaternion={[0, SQRT1_2, SQRT1_2, 0]}
             color="black"
           />
-          <IrregularTetrahedron
+          {/* <IrregularTetrahedron
             position={[0, 0, 0]}
             scale={0.5}
             quaternion={[0.5, -0.5, -0.5, 0.5]}
@@ -55,8 +55,8 @@ function App() {
               new Vector3(1, -1, -1),
               new Vector3(-1, 1, -1),
             ]}
-          />
-          {/* <Facet position={[0,0,0]} /> */}
+          /> */}
+          <Facet position={[0, 0, 0]} />
         </Canvas>
         <p>Left and Right Click to Rotate</p>
       </header>
