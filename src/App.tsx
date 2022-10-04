@@ -56,7 +56,9 @@ function App() {
               new Vector3(-1, 1, -1),
             ]}
           /> */}
-          <Facet position={[0, 0, 0]} />
+          <Facet position={[2, 0, 0]} />
+
+          <Facet position={[0, 0, 0]} quaternion={[SQRT1_2, 0, 0, -SQRT1_2]} />
         </Canvas>
         <p>Left and Right Click to Rotate</p>
       </header>

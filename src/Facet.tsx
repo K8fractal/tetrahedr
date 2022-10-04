@@ -23,12 +23,20 @@ const uvArrayStash = [
 ];
 
 // prettier-ignore
-const uvArrayTest = [
+const uvArray = [
   1, 0.5,         0.5, 1,         0.5, 0.5, 
   0.5, 0.5,       0.5, 0.146,     1, 0.5,
-  0.25, 0,   0, 0.25,   0.302,0.302, // This one needs to be fixed
+  0.25, 0,   0, 0.25,   0.302,0.302, 
   0.146, 0.5,     0.5, 0.5,       0.5, 1   
-]
+];
+
+// prettier-ignore
+const uvArrayTest = [
+  0, 0,         0, 0,         0, 0, 
+  0.5, 0.5,       0.5, 0.146,     1, 0.5,
+  0.25, 0,   0, 0.25,   0.302,0.302, 
+  0.146, 0.5,     0.5, 0.5,       0.5, 1   
+];
 
 /*const indicesOfFaces = 
 [ 1, 2, 3, 
@@ -36,9 +44,31 @@ const uvArrayTest = [
   2, 1, 0, 
   0, 3, 2,];*/
 
+function zeroArrayRange(
+  startIndex: number,
+  length: number,
+  data: number[]
+): number[] {
+  return data.map((value, index) =>
+    index >= startIndex && index < startIndex + length ? 0 : value
+  );
+}
+
 const Facet = (props: FacetProps) => {
   const facetRef = useRef<Mesh>(null); //Initally null, will be set in the object return.
-  const uvMap = new BufferAttribute(new Float32Array(uvArrayTest), 2);
+  const uvMap = new BufferAttribute(new Float32Array(uvArray), 2);
+  const uvMapTest = new BufferAttribute(
+    new Float32Array(zeroArrayRange(6, 6, uvArray)),
+    2
+  );
+
+  const uvSelectedFace = [0, 6, 12, 18].map(
+    (value) =>
+      new BufferAttribute(
+        new Float32Array(zeroArrayRange(value, 6, uvArray)),
+        2
+      )
+  );
   // Measurements and template at https://www.desmos.com/geometry/bb66bkq2ub
 
   const verticesOfTetra = [
@@ -49,22 +79,38 @@ const Facet = (props: FacetProps) => {
   ];
   const [proportionalMap] = useTexture(["textures/FacetTestTexture.png"]);
 
+  const [selectedFace, setSelectedFace] = useState<undefined | number>(
+    undefined
+  );
+
   useEffect(() => {
     //     console.log("useEffect happened");
-    //   if(tetraRef.current){ console.log("Reference Exists")}
+    if (facetRef.current) {
+      console.log("useEffect: " + selectedFace);
+    }
 
-    //For a proportional texture
-    facetRef.current?.geometry.setAttribute("uv", uvMap);
+    if (selectedFace == undefined) {
+      facetRef.current?.geometry.setAttribute("uv", uvMap);
+    } else {
+      facetRef.current?.geometry.setAttribute(
+        "uv",
+        uvSelectedFace[selectedFace]
+      );
+    }
   });
 
   return (
     <mesh
       {...props}
       ref={facetRef}
-      onClick={(event) => console.log("leftclick")}
+      onClick={(event) => console.log(event.faceIndex)}
       onContextMenu={(event) => console.log("rightclick")}
-      onPointerOver={(e) => console.log("over")}
-      onPointerOut={(e) => console.log("out")}
+      onPointerOver={(event) => setSelectedFace(event.faceIndex)}
+      onPointerMove={(event) => setSelectedFace(event.faceIndex)}
+      onPointerOut={(event) => {
+        setSelectedFace(undefined);
+        console.log(selectedFace);
+      }}
     >
       <IrregularTetrahedronGeometry vertices={verticesOfTetra} />
       <meshStandardMaterial color={"lightgray"} map={proportionalMap} />
