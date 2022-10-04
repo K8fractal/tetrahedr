@@ -1,11 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import THREE, {
-  BufferAttribute,
-  BufferGeometry,
-  Mesh,
-  Texture,
-  Vector3,
-} from "three";
+import { BufferAttribute, Mesh, Texture, Vector3 } from "three";
 import { MeshProps } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import { IrregularTetrahedronGeometry } from "./irregularTetrahedron";
@@ -30,14 +24,6 @@ const uvArray = [
   0.146, 0.5,     0.5, 0.5,       0.5, 1   
 ];
 
-// prettier-ignore
-const uvArrayTest = [
-  0, 0,         0, 0,         0, 0, 
-  0.5, 0.5,       0.5, 0.146,     1, 0.5,
-  0.25, 0,   0, 0.25,   0.302,0.302, 
-  0.146, 0.5,     0.5, 0.5,       0.5, 1   
-];
-
 /*const indicesOfFaces = 
 [ 1, 2, 3, 
   3, 0, 1, 
@@ -57,11 +43,8 @@ function zeroArrayRange(
 const Facet = (props: FacetProps) => {
   const facetRef = useRef<Mesh>(null); //Initally null, will be set in the object return.
   const uvMap = new BufferAttribute(new Float32Array(uvArray), 2);
-  const uvMapTest = new BufferAttribute(
-    new Float32Array(zeroArrayRange(6, 6, uvArray)),
-    2
-  );
 
+  // Use 0,0 as the uv index for selected faces
   const uvSelectedFace = [0, 6, 12, 18].map(
     (value) =>
       new BufferAttribute(
@@ -85,9 +68,9 @@ const Facet = (props: FacetProps) => {
 
   useEffect(() => {
     //     console.log("useEffect happened");
-    if (facetRef.current) {
-      console.log("useEffect: " + selectedFace);
-    }
+    // if (facetRef.current) {
+    //   console.log("useEffect: " + selectedFace);
+    // }
 
     if (selectedFace == undefined) {
       facetRef.current?.geometry.setAttribute("uv", uvMap);
@@ -107,10 +90,7 @@ const Facet = (props: FacetProps) => {
       onContextMenu={(event) => console.log("rightclick")}
       onPointerOver={(event) => setSelectedFace(event.faceIndex)}
       onPointerMove={(event) => setSelectedFace(event.faceIndex)}
-      onPointerOut={(event) => {
-        setSelectedFace(undefined);
-        console.log(selectedFace);
-      }}
+      onPointerOut={(event) => setSelectedFace(undefined)}
     >
       <IrregularTetrahedronGeometry vertices={verticesOfTetra} />
       <meshStandardMaterial color={"lightgray"} map={proportionalMap} />

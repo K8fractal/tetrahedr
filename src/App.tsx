@@ -2,12 +2,12 @@ import React from "react";
 import "./App.css";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, useTexture } from "@react-three/drei";
-import Cube from "./Cube";
-import Tetrahedron from "./Tetrahedron";
 import Facet from "./Facet";
-import Triangle from "./Triangle";
-import { IrregularTetrahedron } from "./irregularTetrahedron";
-import { Vector3 } from "three";
+// import Cube from "./Cube";
+// import Tetrahedron from "./Tetrahedron";
+// import Triangle from "./Triangle";
+// import { IrregularTetrahedron } from "./irregularTetrahedron";
+// import { Vector3 } from "three";
 
 function App() {
   const SQRT1_2 = Math.SQRT1_2;
@@ -26,24 +26,12 @@ function App() {
             vertices={[1, 1, 1, 1, -1, 1, 1, 0, 0]}
             position={[0, 0, 0]}
           /> */}
-          <IrregularTetrahedron
-            position={[0, 0, 0]}
-            scale={0.5}
-            quaternion={[1, 0, 0, 0]}
-            color="red"
-          />
-          <IrregularTetrahedron
-            position={[0, 0, 0]}
-            scale={0.5}
-            quaternion={[-0.5, -0.5, 0.5, 0.5]}
-            color="blue"
-          />
-          <IrregularTetrahedron
+          {/* <IrregularTetrahedron
             position={[0, 0, 0]}
             scale={0.5}
             quaternion={[0, SQRT1_2, SQRT1_2, 0]}
             color="black"
-          />
+          /> */}
           {/* <IrregularTetrahedron
             position={[0, 0, 0]}
             scale={0.5}
@@ -56,9 +44,9 @@ function App() {
               new Vector3(-1, 1, -1),
             ]}
           /> */}
-          <Facet position={[2, 0, 0]} />
+          <Facet position={[0, 0, 0]} />
 
-          <Facet position={[0, 0, 0]} quaternion={[SQRT1_2, 0, 0, -SQRT1_2]} />
+          <Facet position={[0, 0, 0]} quaternion={[0, SQRT1_2, 0, -SQRT1_2]} />
         </Canvas>
         <p>Left and Right Click to Rotate</p>
       </header>
