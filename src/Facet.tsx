@@ -86,14 +86,17 @@ const Facet = (props: FacetProps) => {
     <mesh
       {...props}
       ref={facetRef}
-      onClick={(event) => console.log(event.faceIndex)}
-      onContextMenu={(event) => console.log("rightclick")}
+      // onClick={(event) => console.log(event.faceIndex)}
+      // onContextMenu={(event) => console.log("rightclick")}
       onPointerOver={(event) => setSelectedFace(event.faceIndex)}
       onPointerMove={(event) => setSelectedFace(event.faceIndex)}
       onPointerOut={(event) => setSelectedFace(undefined)}
     >
       <IrregularTetrahedronGeometry vertices={verticesOfTetra} />
-      <meshStandardMaterial color={"lightgray"} map={proportionalMap} />
+      <meshStandardMaterial
+        color={"lightgray"}
+        map={props.texture ? props.texture : proportionalMap}
+      />
     </mesh>
   );
 };

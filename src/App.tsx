@@ -3,6 +3,7 @@ import "./App.css";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, useTexture } from "@react-three/drei";
 import Facet from "./Facet";
+import { FacetStructure } from "./facetStructure";
 // import Cube from "./Cube";
 // import Tetrahedron from "./Tetrahedron";
 // import Triangle from "./Triangle";
@@ -44,11 +45,14 @@ function App() {
               new Vector3(-1, 1, -1),
             ]}
           /> */}
-          <Facet position={[0, 0, 0]} />
-
-          <Facet position={[0, 0, 0]} quaternion={[0, SQRT1_2, 0, -SQRT1_2]} />
+          {/* <Facet
+            key="base"
+            position={[0, 1, 0]}
+            quaternion={[SQRT1_2, -SQRT1_2, 0, 0]}
+          /> */}
+          <FacetStructure />
         </Canvas>
-        <p>Left and Right Click to Rotate</p>
+        <p>Click on a face to add to the structure.</p>
       </header>
     </div>
   );
