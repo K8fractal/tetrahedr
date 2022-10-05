@@ -24,6 +24,13 @@ const uvArray = [
   0.146, 0.5,     0.5, 0.5,       0.5, 1   
 ];
 
+export enum FaceDescription {
+  HalfSquare = 0,
+  NearEquilateral = 2,
+  RightSide = 3,
+  LeftSide = 1,
+}
+
 /*const indicesOfFaces = 
 [ 1, 2, 3, 
   3, 0, 1, 
@@ -88,9 +95,15 @@ const Facet = (props: FacetProps) => {
       ref={facetRef}
       // onClick={(event) => console.log(event.faceIndex)}
       // onContextMenu={(event) => console.log("rightclick")}
-      onPointerOver={(event) => setSelectedFace(event.faceIndex)}
-      onPointerMove={(event) => setSelectedFace(event.faceIndex)}
-      onPointerOut={(event) => setSelectedFace(undefined)}
+      onPointerOver={(event) => (
+        event.stopPropagation(), setSelectedFace(event.faceIndex)
+      )}
+      onPointerMove={(event) => (
+        event.stopPropagation(), setSelectedFace(event.faceIndex)
+      )}
+      onPointerOut={(event) => (
+        event.stopPropagation(), setSelectedFace(undefined)
+      )}
     >
       <IrregularTetrahedronGeometry vertices={verticesOfTetra} />
       <meshStandardMaterial
