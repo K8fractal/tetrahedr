@@ -25,7 +25,7 @@ const uvArray = [
 ];
 
 export enum FaceDescription {
-  HalfSquare = 0,
+  QuarterSquare = 0,
   NearEquilateral = 2,
   RightSide = 3,
   LeftSide = 1,

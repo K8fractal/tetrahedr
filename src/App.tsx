@@ -1,8 +1,7 @@
-import React from "react";
 import "./App.css";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, useTexture } from "@react-three/drei";
-import Facet from "./Facet";
+import { OrbitControls } from "@react-three/drei";
+//import Facet from "./Facet";
 import { FacetStructure } from "./facetStructure";
 // import Cube from "./Cube";
 // import Tetrahedron from "./Tetrahedron";
@@ -11,7 +10,7 @@ import { FacetStructure } from "./facetStructure";
 // import { Vector3 } from "three";
 
 function App() {
-  const SQRT1_2 = Math.SQRT1_2;
+  //const SQRT1_2 = Math.SQRT1_2;
   return (
     <div className="App">
       <header className="App-header">

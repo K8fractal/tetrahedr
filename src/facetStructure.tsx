@@ -18,12 +18,15 @@ export const FacetStructure = (props: Record<string, never>) => {
     quaternion: new Quaternion(SQRT1_2, -SQRT1_2, 0, 0),
   };
 
-  const newFacet: FacetData = {
-    key: "new",
-    position: new Vector3(1, 1, 0),
-    quaternion: new Quaternion(SQRT1_2, -SQRT1_2, 0, 0),
-  };
   const [facets, setFacets] = useState([baseFacet]);
+
+  function adjacentCubePosition(startingFacet: FacetData): Vector3 {
+    const newPosition = new Vector3(1, 0, 0)
+      .applyQuaternion(startingFacet.quaternion)
+      .add(startingFacet.position);
+    console.log(newPosition);
+    return newPosition;
+  }
 
   function adjacentFacet(
     startingFacet: FacetData,
@@ -32,9 +35,9 @@ export const FacetStructure = (props: Record<string, never>) => {
     let result = {
       key: startingFacet.key + "d_",
       position: new Vector3(
-        startingFacet.position.x + 1,
+        startingFacet.position.x,
         startingFacet.position.y,
-        startingFacet.position.z
+        startingFacet.position.z + 1
       ),
       quaternion: startingFacet.quaternion,
     };
@@ -67,7 +70,15 @@ export const FacetStructure = (props: Record<string, never>) => {
             .multiply(new Quaternion(SQRT1_2, 0, 0, SQRT1_2)),
         };
         return result;
-      case FaceDescription.HalfSquare:
+      case FaceDescription.QuarterSquare:
+        result = {
+          key: startingFacet.key + "q",
+          position: adjacentCubePosition(startingFacet),
+          quaternion: startingFacet.quaternion
+            .clone()
+            .multiply(new Quaternion(0, 0, 1, 0)),
+        };
+        return result;
       default:
         return result;
     }
