@@ -1,13 +1,17 @@
 # Tetrahedr
 
-This is my learning project for [Three.js](https://threejs.org/). I was inspired by to create a virtual building block project based on the geometry of [Shashibo](https://funinmotiontoys.com/pages/getshashibo-home). This project is still in development.
+## Try the [latest release](https://tetrahedr.katefractal.com/)
 
+This is my learning project for [Three.js](https://threejs.org/). I was inspired by to create a virtual building block project based on the geometry of [Shashibo](https://funinmotiontoys.com/pages/getshashibo-home). 
 
-# Getting Started with Create React App
+## Roadmap of upcoming features
+- option to delete blocks
+- more and better textures
+- fix flicker on some andriod phones
+- save and load creations
+(updated 10/7/2022)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
+## Bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 In the project directory, you can run:
 
@@ -44,7 +48,7 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+### Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
