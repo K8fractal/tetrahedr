@@ -67,7 +67,7 @@ const Facet = (props: FacetProps) => {
     new Vector3(0.5, -0.5, 0.5),
     new Vector3(0.5, 0, 0),
   ];
-  const [proportionalMap] = useTexture(["textures/FacetTestTexture.png"]);
+  const [defaultTextureMap] = useTexture(["textures/FacetTestTexture.png"]);
 
   const [selectedFace, setSelectedFace] = useState<undefined | number>(
     undefined
@@ -108,7 +108,7 @@ const Facet = (props: FacetProps) => {
       <IrregularTetrahedronGeometry vertices={verticesOfTetra} />
       <meshStandardMaterial
         color={"lightgray"}
-        map={props.texture ?? proportionalMap}
+        map={props.texture ?? defaultTextureMap}
       />
     </mesh>
   );
