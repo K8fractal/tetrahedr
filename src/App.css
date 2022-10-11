@@ -4,7 +4,7 @@
 canvas {
   /*border: 1px solid red; DO NOT USE, causes canvas size to increase indefinetly, see https://github.com/pmndrs/react-three-fiber/issues/1684*/
   background-color: whitesmoke;
-  height: 600px;
+  height: 75vh;
 }
 
 .App-header {
