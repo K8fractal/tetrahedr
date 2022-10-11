@@ -37,13 +37,23 @@ export enum FaceDescription {
   2, 1, 0, 
   0, 3, 2,];*/
 
-function zeroArrayRange(
+export function overwriteArrayRange(
   startIndex: number,
   length: number,
-  data: number[]
+  data: number[],
+  replace = 0
 ): number[] {
+  if (startIndex + length > data.length) {
+    throw new RangeError("attempt to overwrite non-existant data");
+  }
+  if (startIndex < 0 || startIndex % 1 != 0) {
+    throw new TypeError("startIndex must be a non-negative integer");
+  }
+  if (length < 0 || length % 1 != 0) {
+    throw new TypeError("length must be a non-negative integer");
+  }
   return data.map((value, index) =>
-    index >= startIndex && index < startIndex + length ? 0 : value
+    index >= startIndex && index < startIndex + length ? replace : value
   );
 }
 
@@ -55,7 +65,7 @@ const Facet = (props: FacetProps) => {
   const uvSelectedFace = [0, 6, 12, 18].map(
     (value) =>
       new BufferAttribute(
-        new Float32Array(zeroArrayRange(value, 6, uvArray)),
+        new Float32Array(overwriteArrayRange(value, 6, uvArray)),
         2
       )
   );
