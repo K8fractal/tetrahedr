@@ -52,6 +52,11 @@ function App() {
           <FacetStructure />
         </Canvas>
         <p>Click on a face to add to the structure.</p>
+        <p className="footnote">
+          <a href="https://github.com/K8fractal/tetrahedr">
+            Code for Tetrahedr on github
+          </a>
+        </p>
       </header>
     </div>
   );

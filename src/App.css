@@ -4,7 +4,7 @@
 canvas {
   /*border: 1px solid red; DO NOT USE, causes canvas size to increase indefinetly, see https://github.com/pmndrs/react-three-fiber/issues/1684*/
   background-color: whitesmoke;
-  height: 600px;
+  height: 75vh;
 }
 
 .App-header {
@@ -16,4 +16,16 @@ canvas {
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.footnote {
+  font-size: calc(10px + 0.5vmin);
+}
+
+a {
+  color:cornflowerblue;
+}
+
+a:visited {
+  color:violet;
 }
