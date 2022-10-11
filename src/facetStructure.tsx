@@ -95,7 +95,7 @@ export const FacetStructure = (props: Record<string, never>) => {
           onContextMenu={(event) => console.log(event.faceIndex)}
           position={current.position}
           quaternion={current.quaternion}
-          key={current.key ? current.key : `facet${index}`}
+          key={current.key ?? `facet${index}`}
         />
       ))}
     </group>

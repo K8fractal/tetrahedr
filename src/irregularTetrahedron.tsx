@@ -44,14 +44,12 @@ export const IrregularTetrahedronGeometry = (
 export const IrregularTetrahedron = (props: TetrahedronProps) => {
   //const verticesOfTetra = [0, 0, 0,   1, 1, 1,    1, -1, 1,   1, 0, 0];
 
-  const verticesOfTetra = props.vertices
-    ? props.vertices
-    : [
-        new Vector3(0, 0, 0),
-        new Vector3(1, 1, 1),
-        new Vector3(1, -1, 1),
-        new Vector3(1, 0, 0),
-      ];
+  const verticesOfTetra = props.vertices ?? [
+    new Vector3(0, 0, 0),
+    new Vector3(1, 1, 1),
+    new Vector3(1, -1, 1),
+    new Vector3(1, 0, 0),
+  ];
   // const indicesOfFaces = [2, 1, 0, 0, 3, 2, 1, 2, 3, 3, 0, 1];
 
   // const vertices = computeFullVertexArray(verticesOfTetra, indicesOfFaces);
