@@ -37,7 +37,7 @@ export enum FaceDescription {
   2, 1, 0, 
   0, 3, 2,];*/
 
-export function overwriteArrayRange(
+export function arrayWithOverwrittenRange(
   startIndex: number,
   length: number,
   data: number[],
@@ -65,7 +65,7 @@ const Facet = (props: FacetProps) => {
   const uvSelectedFace = [0, 6, 12, 18].map(
     (value) =>
       new BufferAttribute(
-        new Float32Array(overwriteArrayRange(value, 6, uvArray)),
+        new Float32Array(arrayWithOverwrittenRange(value, 6, uvArray)),
         2
       )
   );

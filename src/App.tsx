@@ -15,7 +15,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <p>Tetrahedr</p>
-        <Canvas className="Three-canvas">
+        <Canvas className="Three-canvas" camera={{ position: [0.1, 0.1, 5.1] }}>
           <OrbitControls />
           <ambientLight intensity={0.5} />
           <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />

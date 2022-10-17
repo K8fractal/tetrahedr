@@ -8,6 +8,72 @@ interface FacetData {
   position: Vector3;
 }
 
+function adjacentCubePosition(startingFacet: FacetData): Vector3 {
+  const newPosition = new Vector3(1, 0, 0)
+    .applyQuaternion(startingFacet.quaternion)
+    .add(startingFacet.position);
+  console.log(newPosition);
+  return newPosition;
+}
+
+function adjacentFacet(
+  startingFacet: FacetData,
+  faceNumber: number | undefined
+): FacetData {
+  let result = {
+    key: startingFacet.key + "d_",
+    position: new Vector3(
+      startingFacet.position.x,
+      startingFacet.position.y,
+      startingFacet.position.z + 1
+    ),
+    quaternion: startingFacet.quaternion,
+  };
+  const SQRT1_2 = Math.SQRT1_2;
+
+  switch (faceNumber) {
+    case FaceDescription.NearEquilateral:
+      result = {
+        key: startingFacet.key + "e",
+        position: startingFacet.position,
+        quaternion: startingFacet.quaternion
+          .clone()
+          .multiply(new Quaternion(SQRT1_2, 0, SQRT1_2, 0)),
+      };
+      //console.log("NearEquilater: " + result.quaternion.toArray());
+      return result;
+    case FaceDescription.LeftSide:
+      result = {
+        key: startingFacet.key + "l",
+        position: startingFacet.position,
+        quaternion: startingFacet.quaternion
+          .clone()
+          .multiply(new Quaternion(SQRT1_2, 0, 0, -SQRT1_2)),
+      };
+      return result;
+    case FaceDescription.RightSide:
+      result = {
+        key: startingFacet.key + "r",
+        position: startingFacet.position,
+        quaternion: startingFacet.quaternion
+          .clone()
+          .multiply(new Quaternion(SQRT1_2, 0, 0, SQRT1_2)),
+      };
+      return result;
+    case FaceDescription.QuarterSquare:
+      result = {
+        key: startingFacet.key + "q",
+        position: adjacentCubePosition(startingFacet),
+        quaternion: startingFacet.quaternion
+          .clone()
+          .multiply(new Quaternion(0, 0, 1, 0)),
+      };
+      return result;
+    default:
+      return result;
+  }
+}
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const FacetStructure = (props: Record<string, never>) => {
   const SQRT1_2 = Math.SQRT1_2;
@@ -19,70 +85,6 @@ export const FacetStructure = (props: Record<string, never>) => {
   };
 
   const [facets, setFacets] = useState([baseFacet]);
-
-  function adjacentCubePosition(startingFacet: FacetData): Vector3 {
-    const newPosition = new Vector3(1, 0, 0)
-      .applyQuaternion(startingFacet.quaternion)
-      .add(startingFacet.position);
-    console.log(newPosition);
-    return newPosition;
-  }
-
-  function adjacentFacet(
-    startingFacet: FacetData,
-    faceNumber: number | undefined
-  ): FacetData {
-    let result = {
-      key: startingFacet.key + "d_",
-      position: new Vector3(
-        startingFacet.position.x,
-        startingFacet.position.y,
-        startingFacet.position.z + 1
-      ),
-      quaternion: startingFacet.quaternion,
-    };
-    switch (faceNumber) {
-      case FaceDescription.NearEquilateral:
-        result = {
-          key: startingFacet.key + "e",
-          position: startingFacet.position,
-          quaternion: startingFacet.quaternion
-            .clone()
-            .multiply(new Quaternion(SQRT1_2, 0, SQRT1_2, 0)),
-        };
-        //console.log("NearEquilater: " + result.quaternion.toArray());
-        return result;
-      case FaceDescription.LeftSide:
-        result = {
-          key: startingFacet.key + "l",
-          position: startingFacet.position,
-          quaternion: startingFacet.quaternion
-            .clone()
-            .multiply(new Quaternion(SQRT1_2, 0, 0, -SQRT1_2)),
-        };
-        return result;
-      case FaceDescription.RightSide:
-        result = {
-          key: startingFacet.key + "r",
-          position: startingFacet.position,
-          quaternion: startingFacet.quaternion
-            .clone()
-            .multiply(new Quaternion(SQRT1_2, 0, 0, SQRT1_2)),
-        };
-        return result;
-      case FaceDescription.QuarterSquare:
-        result = {
-          key: startingFacet.key + "q",
-          position: adjacentCubePosition(startingFacet),
-          quaternion: startingFacet.quaternion
-            .clone()
-            .multiply(new Quaternion(0, 0, 1, 0)),
-        };
-        return result;
-      default:
-        return result;
-    }
-  }
 
   return (
     <group>
