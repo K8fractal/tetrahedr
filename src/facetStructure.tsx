@@ -2,21 +2,21 @@ import { useState } from "react";
 import { Quaternion, Vector3 } from "three";
 import Facet, { FaceDescription } from "./Facet";
 
-interface FacetData {
+export interface FacetData {
   key: string;
   quaternion: Quaternion;
   position: Vector3;
 }
 
-function adjacentCubePosition(startingFacet: FacetData): Vector3 {
+export function adjacentCubePosition(startingFacet: FacetData): Vector3 {
   const newPosition = new Vector3(1, 0, 0)
     .applyQuaternion(startingFacet.quaternion)
     .add(startingFacet.position);
-  console.log(newPosition);
+  //console.log(newPosition);
   return newPosition;
 }
 
-function adjacentFacet(
+export function adjacentFacet(
   startingFacet: FacetData,
   faceNumber: number | undefined
 ): FacetData {
