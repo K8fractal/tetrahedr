@@ -53,9 +53,9 @@ export function arrayWithOverwrittenRange(
     throw new TypeError("length must be a non-negative integer");
   }
   return [...data].fill(replace, startIndex, startIndex + length);
-  return data.map((value, index) =>
-    index >= startIndex && index < startIndex + length ? replace : value
-  );
+  // return data.map((value, index) =>
+  //     index >= startIndex && index < startIndex + length ? replace : value
+  //   );
 }
 
 const Facet = (props: FacetProps) => {
