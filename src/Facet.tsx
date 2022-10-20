@@ -52,6 +52,7 @@ export function arrayWithOverwrittenRange(
   if (length < 0 || length % 1 != 0) {
     throw new TypeError("length must be a non-negative integer");
   }
+  return [...data].fill(replace, startIndex, startIndex + length);
   return data.map((value, index) =>
     index >= startIndex && index < startIndex + length ? replace : value
   );
