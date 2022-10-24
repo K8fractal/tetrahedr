@@ -45,21 +45,21 @@ export const toBeSimilarQuaternion = function (
   return { pass, message };
 };
 
-interface CustomMatchers<R = unknown> {
-  toBeCloseVector3(expected: Vector3, marginOfError?: number): R;
-}
+// interface CustomMatchers<R = unknown> {
+//   toBeCloseVector3(expected: Vector3, marginOfError?: number): R;
+// }
 
-declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
-  namespace jest {
-    // eslint-disable-next-line @typescript-eslint/no-empty-interface
-    interface Expect extends CustomMatchers {}
-    // eslint-disable-next-line @typescript-eslint/no-empty-interface
-    interface Matchers<R> extends CustomMatchers<R> {}
-    // eslint-disable-next-line @typescript-eslint/no-empty-interface
-    interface InverseAsymmetricMatchers extends CustomMatchers {}
-  }
-}
+// declare global {
+//   // eslint-disable-next-line @typescript-eslint/no-namespace
+//   namespace jest {
+//     // eslint-disable-next-line @typescript-eslint/no-empty-interface
+//     interface Expect extends CustomMatchers {}
+//     // eslint-disable-next-line @typescript-eslint/no-empty-interface
+//     interface Matchers<R> extends CustomMatchers<R> {}
+//     // eslint-disable-next-line @typescript-eslint/no-empty-interface
+//     interface InverseAsymmetricMatchers extends CustomMatchers {}
+//   }
+// }
 
 // declare module "expect" {
 //   interface AsymmetricMatchers {
@@ -70,10 +70,10 @@ declare global {
 //   }
 // }
 
-// expect.extend({
-//   toBeCloseVector3,
-//   toBeSimilarQuaternion,
-// });
+expect.extend({
+  toBeCloseVector3,
+  toBeSimilarQuaternion,
+});
 
 const baseFacet: FacetData = {
   key: "base_",
