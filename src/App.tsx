@@ -10,7 +10,7 @@ import { FacetStructure } from "./facetStructure";
 // import { Vector3 } from "three";
 
 function App() {
-  //const SQRT1_2 = Math.SQRT1_2;
+  // const SQRT1_2 = Math.SQRT1_2;
   return (
     <div className="App">
       <header className="App-header">
@@ -21,16 +21,16 @@ function App() {
           <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
           <pointLight position={[-10, -10, -10]} />
 
-          {/* <Cube position={[0, 0, 0]} scale={0.95} /> */}
+          {/* <Cube position={[0, 1, 0]} scale={1} /> */}
           {/* <Triangle
             vertices={[1, 1, 1, 1, -1, 1, 1, 0, 0]}
             position={[0, 0, 0]}
           /> */}
           {/* <IrregularTetrahedron
-            position={[0, 0, 0]}
+            position={[0, 1, 0]}
             scale={0.5}
-            quaternion={[0, SQRT1_2, SQRT1_2, 0]}
-            color="black"
+            quaternion={[-SQRT1_2, SQRT1_2, 0, 0]}
+            color="purple"
           /> */}
           {/* <IrregularTetrahedron
             position={[0, 0, 0]}
