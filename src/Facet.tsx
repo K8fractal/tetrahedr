@@ -54,9 +54,9 @@ export function arrayWithOverwrittenRange(
   }
   return [...data].fill(replace, startIndex, startIndex + length);
   // return data.map((value, index) =>
-  //     index >= startIndex && index < startIndex + length ? replace : value
-  //   );
-}
+  //   index >= startIndex && index < startIndex + length ? replace : value
+  // );
+
 
 const Facet = (props: FacetProps) => {
   const facetRef = useRef<Mesh>(null); //Initally null, will be set in the object return.
