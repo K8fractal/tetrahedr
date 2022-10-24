@@ -128,3 +128,50 @@ describe("testing adjacentFacet with right isoceles side and facet 12 and 62", (
     ).toBeSimilarQuaternion(facet12.quaternion);
   });
 });
+
+describe("general adjacentFacet tests", () => {
+  test("four adjacent left takes you back to orginal facet", () => {
+    expect(
+      adjacentFacet(
+        adjacentFacet(
+          adjacentFacet(
+            adjacentFacet(facet62, FaceDescription.LeftSide),
+            FaceDescription.LeftSide
+          ),
+          FaceDescription.LeftSide
+        ),
+        FaceDescription.LeftSide
+      ).quaternion
+    ).toBeSimilarQuaternion(facet62.quaternion);
+  });
+
+  test("four adjacent rights takes you back to orginal facet", () => {
+    expect(
+      adjacentFacet(
+        adjacentFacet(
+          adjacentFacet(
+            adjacentFacet(facet12, FaceDescription.RightSide),
+            FaceDescription.RightSide
+          ),
+          FaceDescription.RightSide
+        ),
+        FaceDescription.RightSide
+      ).quaternion
+    ).toBeSimilarQuaternion(facet12.quaternion);
+  });
+  test("adjacent left doesn't change position", () => {
+    expect(
+      adjacentFacet(facet12, FaceDescription.LeftSide).position
+    ).toBeCloseVector3(facet12.position);
+  });
+  test("adjacent right doesn't change positon", () => {
+    expect(
+      adjacentFacet(baseFacet, FaceDescription.RightSide).position
+    ).toBeCloseVector3(baseFacet.position);
+  });
+  test("adject near equilateral doesn't change position", () => {
+    expect(
+      adjacentFacet(facet62, FaceDescription.NearEquilateral).position
+    ).toBeCloseVector3(facet62.position);
+  });
+});
