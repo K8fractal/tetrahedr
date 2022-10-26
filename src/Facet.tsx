@@ -1,20 +1,19 @@
 import { useEffect, useRef, useState } from "react";
-import { BufferAttribute, Mesh, Texture, Vector3 } from "three";
+import { BufferAttribute, Color, Mesh, Vector3 } from "three";
 import { MeshProps } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import { IrregularTetrahedronGeometry } from "./irregularTetrahedron";
 
 interface FacetProps extends MeshProps {
-  texture?: Texture;
+  visual?: FacetVisuals;
 }
 
-// prettier-ignore
-const uvArrayStash = [
-  0, 0.5,         0.427, 0.427,   0.354, 0.854, 
-  0.5, 0,         0, 0.5,         0.427, 0.427, 
-  0, 0.5,         0.5, 0,         0, 0, 
-  0.5, 0,         0.854, 0.354,   0.427, 0.427,   
-];
+export enum FaceDescription {
+  QuarterSquare = 0,
+  NearEquilateral = 2,
+  RightSide = 3,
+  LeftSide = 1,
+}
 
 // prettier-ignore
 const uvArray = [
@@ -24,19 +23,36 @@ const uvArray = [
   0.146, 0.5,     0.5, 0.5,       0.5, 1   
 ];
 
-export enum FaceDescription {
-  QuarterSquare = 0,
-  NearEquilateral = 2,
-  RightSide = 3,
-  LeftSide = 1,
+export enum FacetVisuals {
+  TextureTest,
+  TextureEdgeHighlight,
+  ColorBlack,
+  TextureUV,
 }
 
-/*const indicesOfFaces = 
-[ 1, 2, 3, 
-  3, 0, 1, 
-  2, 1, 0, 
-  0, 3, 2,];*/
+interface VisualDetails {
+  uvArray: number[];
+  textureSource: string;
+  color: Color;
+}
 
+function getVisualDetails(key: FacetVisuals): VisualDetails {
+  switch (key) {
+    case FacetVisuals.TextureUV:
+      return {
+        uvArray,
+        textureSource: "textures/CustomUVChecker_byValle_1K.png",
+        color: new Color("white"),
+      };
+    case FacetVisuals.TextureTest:
+    default:
+      return {
+        uvArray,
+        textureSource: "textures/FacetTestTexture.png",
+        color: new Color("lightgray"),
+      };
+  }
+}
 export function arrayWithOverwrittenRange(
   startIndex: number,
   length: number,
@@ -60,36 +76,31 @@ export function arrayWithOverwrittenRange(
 
 const Facet = (props: FacetProps) => {
   const facetRef = useRef<Mesh>(null); //Initally null, will be set in the object return.
-  const uvMap = new BufferAttribute(new Float32Array(uvArray), 2);
-
-  // Use 0,0 as the uv index for selected faces
-  const uvSelectedFace = [0, 6, 12, 18].map(
-    (value) =>
-      new BufferAttribute(
-        new Float32Array(arrayWithOverwrittenRange(value, 6, uvArray)),
-        2
-      )
-  );
-  // Measurements and template at https://www.desmos.com/geometry/bb66bkq2ub
-
   const verticesOfTetra = [
     new Vector3(0, 0, 0),
     new Vector3(0.5, 0.5, 0.5),
     new Vector3(0.5, -0.5, 0.5),
     new Vector3(0.5, 0, 0),
   ];
-  const [defaultTextureMap] = useTexture(["textures/FacetTestTexture.png"]);
+  const visuals = getVisualDetails(props.visual ?? FacetVisuals.TextureTest);
+
+  const uvMap = new BufferAttribute(new Float32Array(visuals.uvArray), 2);
+  // Use 0,0 as the uv index for selected faces
+  const uvSelectedFace = [0, 6, 12, 18].map(
+    (value) =>
+      new BufferAttribute(
+        new Float32Array(arrayWithOverwrittenRange(value, 6, visuals.uvArray)),
+        2
+      )
+  );
+  // Measurements and template at https://www.desmos.com/geometry/bb66bkq2ub
+  const [TextureMap] = useTexture([visuals.textureSource]);
 
   const [selectedFace, setSelectedFace] = useState<undefined | number>(
     undefined
   );
 
   useEffect(() => {
-    //     console.log("useEffect happened");
-    // if (facetRef.current) {
-    //   console.log("useEffect: " + selectedFace);
-    // }
-
     if (selectedFace == undefined) {
       facetRef.current?.geometry.setAttribute("uv", uvMap);
     } else {
@@ -117,10 +128,7 @@ const Facet = (props: FacetProps) => {
       )}
     >
       <IrregularTetrahedronGeometry vertices={verticesOfTetra} />
-      <meshStandardMaterial
-        color={"lightgray"}
-        map={props.texture ?? defaultTextureMap}
-      />
+      <meshStandardMaterial color={visuals.color} map={TextureMap} />
     </mesh>
   );
 };

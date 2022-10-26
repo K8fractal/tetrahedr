@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Quaternion, Vector3 } from "three";
-import Facet, { FaceDescription } from "./Facet";
+import Facet, { FaceDescription, FacetVisuals } from "./Facet";
 
 export interface FacetData {
   key: string;
@@ -98,6 +98,7 @@ export const FacetStructure = (props: Record<string, never>) => {
           position={current.position}
           quaternion={current.quaternion}
           key={current.key ?? `facet${index}`}
+          visual={FacetVisuals.TextureUV}
         />
       ))}
     </group>
