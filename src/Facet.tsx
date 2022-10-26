@@ -6,6 +6,7 @@ import { IrregularTetrahedronGeometry } from "./irregularTetrahedron";
 
 interface FacetProps extends MeshProps {
   visual?: FacetVisuals;
+  facetKey: string;
 }
 
 export enum FaceDescription {
@@ -25,8 +26,8 @@ const uvArray = [
 
 export enum FacetVisuals {
   TextureTest,
-  TextureEdgeHighlight,
-  ColorBlack,
+  // TextureEdgeHighlight,
+  // ColorBlack,
   TextureUV,
 }
 
@@ -34,6 +35,16 @@ interface VisualDetails {
   uvArray: number[];
   textureSource: string;
   color: Color;
+}
+
+export function nextVisual(visual?: FacetVisuals): FacetVisuals | undefined {
+  console.log(`Swapping visual from ${visual}`);
+  switch (visual) {
+    case FacetVisuals.TextureTest:
+      return FacetVisuals.TextureUV;
+    case FacetVisuals.TextureUV:
+      return FacetVisuals.TextureTest;
+  }
 }
 
 function getVisualDetails(key: FacetVisuals): VisualDetails {
@@ -53,6 +64,7 @@ function getVisualDetails(key: FacetVisuals): VisualDetails {
       };
   }
 }
+
 export function arrayWithOverwrittenRange(
   startIndex: number,
   length: number,
@@ -110,7 +122,7 @@ const Facet = (props: FacetProps) => {
       );
     }
   });
-
+  console.log(`rendering ${props.facetKey}`);
   return (
     <mesh
       {...props}

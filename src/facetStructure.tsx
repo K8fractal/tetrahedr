@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Quaternion, Vector3 } from "three";
-import Facet, { FaceDescription, FacetVisuals } from "./Facet";
+import Facet, { FaceDescription, FacetVisuals, nextVisual } from "./Facet";
 
 export interface FacetData {
   key: string;
   quaternion: Quaternion;
   position: Vector3;
+  visual?: FacetVisuals;
 }
 
 export function adjacentCubePosition(startingFacet: FacetData): Vector3 {
@@ -20,58 +21,39 @@ export function adjacentFacet(
   startingFacet: FacetData,
   faceNumber: number | undefined
 ): FacetData {
-  let result = {
-    key: startingFacet.key + "d_",
-    position: new Vector3(
-      startingFacet.position.x,
-      startingFacet.position.y,
-      startingFacet.position.z + 1
-    ),
-    quaternion: startingFacet.quaternion,
+  const result = {
+    key: startingFacet.key,
+    position: startingFacet.position.clone(),
+    quaternion: startingFacet.quaternion.clone(),
+    visual: startingFacet.visual,
   };
   const SQRT1_2 = Math.SQRT1_2;
 
   switch (faceNumber) {
     case FaceDescription.NearEquilateral:
-      result = {
-        key: startingFacet.key + "e",
-        position: startingFacet.position,
-        quaternion: startingFacet.quaternion
-          .clone()
-          .multiply(new Quaternion(SQRT1_2, 0, SQRT1_2, 0)),
-      };
-      //console.log("NearEquilater: " + result.quaternion.toArray());
-      return result;
+      result.key += "e";
+      result.quaternion = startingFacet.quaternion
+        .clone()
+        .multiply(new Quaternion(SQRT1_2, 0, SQRT1_2, 0));
+      break;
     case FaceDescription.LeftSide:
-      result = {
-        key: startingFacet.key + "l",
-        position: startingFacet.position,
-        quaternion: startingFacet.quaternion
-          .clone()
-          .multiply(new Quaternion(SQRT1_2, 0, 0, -SQRT1_2)),
-      };
-      return result;
+      result.key += "l";
+      result.quaternion.multiply(new Quaternion(SQRT1_2, 0, 0, -SQRT1_2));
+      break;
     case FaceDescription.RightSide:
-      result = {
-        key: startingFacet.key + "r",
-        position: startingFacet.position,
-        quaternion: startingFacet.quaternion
-          .clone()
-          .multiply(new Quaternion(SQRT1_2, 0, 0, SQRT1_2)),
-      };
-      return result;
+      result.key += "r";
+      result.quaternion.multiply(new Quaternion(SQRT1_2, 0, 0, SQRT1_2));
+      break;
     case FaceDescription.QuarterSquare:
-      result = {
-        key: startingFacet.key + "q",
-        position: adjacentCubePosition(startingFacet),
-        quaternion: startingFacet.quaternion
-          .clone()
-          .multiply(new Quaternion(0, 0, 1, 0)),
-      };
-      return result;
-    default:
-      return result;
+      result.key += "q";
+      result.position = adjacentCubePosition(startingFacet);
+      result.quaternion.multiply(new Quaternion(0, 0, 1, 0));
+      break;
+    default: // should never happen
+      result.key += "_d_";
+      result.position.x += 1;
   }
+  return result;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -82,6 +64,7 @@ export const FacetStructure = (props: Record<string, never>) => {
     key: "base_",
     position: new Vector3(0, 1, 0),
     quaternion: new Quaternion(SQRT1_2, -SQRT1_2, 0, 0),
+    visual: FacetVisuals.TextureTest,
   };
 
   const [facets, setFacets] = useState([baseFacet]);
@@ -94,11 +77,20 @@ export const FacetStructure = (props: Record<string, never>) => {
             event.stopPropagation(),
             setFacets([...facets, adjacentFacet(current, event.faceIndex)])
           )}
-          onContextMenu={(event) => console.log(event.faceIndex)}
+          onContextMenu={(event) => {
+            event.stopPropagation();
+
+            current.visual = nextVisual(current.visual);
+            setFacets([...facets]); //update the state
+            // console.log(
+            //   `right click on ${current.key} face ${event.faceIndex}. visual is now ${current.visual}`
+            // );
+          }}
           position={current.position}
           quaternion={current.quaternion}
           key={current.key ?? `facet${index}`}
-          visual={FacetVisuals.TextureUV}
+          facetKey={current.key ?? `facet${index}`}
+          visual={current.visual ?? FacetVisuals.TextureUV}
         />
       ))}
     </group>
