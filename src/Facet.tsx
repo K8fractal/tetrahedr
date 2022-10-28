@@ -16,20 +16,14 @@ export enum FaceDescription {
   LeftSide = 1,
 }
 
-// prettier-ignore
-const uvArray = [
-  1, 0.5,         0.5, 1,         0.5, 0.5, 
-  0.5, 0.5,       0.5, 0.146,     1, 0.5,
-  0.25, 0,        0, 0.25,        0.302,0.302, 
-  0.146, 0.5,     0.5, 0.5,       0.5, 1   
-];
-
 export enum FacetVisuals {
   TextureTest,
-  // TextureEdgeHighlight,
+  TextureEdgeHighlight,
+  TexturePurpleRed,
   // ColorBlack,
   TextureUV,
 }
+// All facetVisuals list
 
 interface VisualDetails {
   uvArray: number[];
@@ -41,24 +35,55 @@ export function nextVisual(visual?: FacetVisuals): FacetVisuals | undefined {
   console.log(`Swapping visual from ${visual}`);
   switch (visual) {
     case FacetVisuals.TextureTest:
+      return FacetVisuals.TexturePurpleRed;
+    case FacetVisuals.TexturePurpleRed:
       return FacetVisuals.TextureUV;
     case FacetVisuals.TextureUV:
+      return FacetVisuals.TextureEdgeHighlight;
+    case FacetVisuals.TextureEdgeHighlight:
       return FacetVisuals.TextureTest;
   }
 }
 
 function getVisualDetails(key: FacetVisuals): VisualDetails {
+  // prettier-ignore
+  const uvTestArray = [
+  1, 0.5,         0.5, 1,         0.5, 0.5, 
+  0.5, 0.5,       0.5, 0.146,     1, 0.5,
+  0.25, 0,        0, 0.25,        0.302,0.302, 
+  0.146, 0.5,     0.5, 0.5,       0.5, 1   
+  ];
+  // prettier-ignore
+  const uvRectArray = [
+    0, 0.5,       0.5, 1,         0, 1, 
+    1,0.293,      1,0.646,        0.5,0.293, 
+    0.5, 1,       0.5, 0.293,     1,0.646, 
+    1,0.646,      1,1,            0.5,1, 
+  ];
+
   switch (key) {
+    case FacetVisuals.TexturePurpleRed:
+      return {
+        uvArray: uvRectArray,
+        textureSource: "textures/PurpleRedTexture.png",
+        color: new Color("white"),
+      };
+    case FacetVisuals.TextureEdgeHighlight:
+      return {
+        uvArray: uvRectArray,
+        textureSource: "textures/EdgeHighlightTexture.png",
+        color: new Color("white"),
+      };
     case FacetVisuals.TextureUV:
       return {
-        uvArray,
+        uvArray: uvRectArray,
         textureSource: "textures/CustomUVChecker_byValle_1K.png",
         color: new Color("white"),
       };
     case FacetVisuals.TextureTest:
     default:
       return {
-        uvArray,
+        uvArray: uvTestArray,
         textureSource: "textures/FacetTestTexture.png",
         color: new Color("lightgray"),
       };
