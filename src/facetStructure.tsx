@@ -64,7 +64,7 @@ export const FacetStructure = (props: Record<string, never>) => {
     key: "base_",
     position: new Vector3(0, 1, 0),
     quaternion: new Quaternion(SQRT1_2, -SQRT1_2, 0, 0),
-    visual: FacetVisuals.TextureTest,
+    visual: FacetVisuals.TexturePurpleRed,
   };
 
   const [facets, setFacets] = useState([baseFacet]);
