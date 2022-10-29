@@ -1,28 +1,13 @@
 import { useEffect, useRef, useState } from "react";
-import { BufferAttribute, Mesh, Texture, Vector3 } from "three";
+import { BufferAttribute, Color, Mesh, Vector3 } from "three";
 import { MeshProps } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import { IrregularTetrahedronGeometry } from "./irregularTetrahedron";
 
 interface FacetProps extends MeshProps {
-  texture?: Texture;
+  visual?: FacetVisuals;
+  facetKey: string;
 }
-
-// prettier-ignore
-const uvArrayStash = [
-  0, 0.5,         0.427, 0.427,   0.354, 0.854, 
-  0.5, 0,         0, 0.5,         0.427, 0.427, 
-  0, 0.5,         0.5, 0,         0, 0, 
-  0.5, 0,         0.854, 0.354,   0.427, 0.427,   
-];
-
-// prettier-ignore
-const uvArray = [
-  1, 0.5,         0.5, 1,         0.5, 0.5, 
-  0.5, 0.5,       0.5, 0.146,     1, 0.5,
-  0.25, 0,        0, 0.25,        0.302,0.302, 
-  0.146, 0.5,     0.5, 0.5,       0.5, 1   
-];
 
 export enum FaceDescription {
   QuarterSquare = 0,
@@ -31,54 +16,128 @@ export enum FaceDescription {
   LeftSide = 1,
 }
 
-/*const indicesOfFaces = 
-[ 1, 2, 3, 
-  3, 0, 1, 
-  2, 1, 0, 
-  0, 3, 2,];*/
+export enum FacetVisuals {
+  TextureTest,
+  TextureEdgeHighlight,
+  TexturePurpleRed,
+  // ColorBlack,
+  TextureUV,
+}
+// All facetVisuals list
 
-function zeroArrayRange(
+interface VisualDetails {
+  uvArray: number[];
+  textureSource: string;
+  color: Color;
+}
+
+export function nextVisual(visual?: FacetVisuals): FacetVisuals | undefined {
+  console.log(`Swapping visual from ${visual}`);
+  switch (visual) {
+    case FacetVisuals.TextureTest:
+      return FacetVisuals.TexturePurpleRed;
+    case FacetVisuals.TexturePurpleRed:
+      return FacetVisuals.TextureEdgeHighlight;
+    case FacetVisuals.TextureUV: //Skipped for now
+      return FacetVisuals.TextureEdgeHighlight;
+    case FacetVisuals.TextureEdgeHighlight:
+      return FacetVisuals.TextureTest;
+  }
+}
+
+function getVisualDetails(key: FacetVisuals): VisualDetails {
+  // prettier-ignore
+  const uvTestArray = [
+  1, 0.5,         0.5, 1,         0.5, 0.5, 
+  0.5, 0.5,       0.5, 0.146,     1, 0.5,
+  0.25, 0,        0, 0.25,        0.302,0.302, 
+  0.146, 0.5,     0.5, 0.5,       0.5, 1   
+  ];
+  // prettier-ignore
+  const uvRectArray = [
+    0, 0.5,       0.5, 1,         0, 1, 
+    1,0.293,      1,0.646,        0.5,0.293, 
+    0.5, 1,       0.5, 0.293,     1,0.646, 
+    1,0.646,      1,1,            0.5,1, 
+  ];
+
+  switch (key) {
+    case FacetVisuals.TexturePurpleRed:
+      return {
+        uvArray: uvRectArray,
+        textureSource: "textures/PurpleRedTexture.png",
+        color: new Color("white"),
+      };
+    case FacetVisuals.TextureEdgeHighlight:
+      return {
+        uvArray: uvRectArray,
+        textureSource: "textures/EdgeHighlightTexture.png",
+        color: new Color("white"),
+      };
+    case FacetVisuals.TextureUV:
+      return {
+        uvArray: uvRectArray,
+        textureSource: "textures/CustomUVChecker_byValle_1K.png",
+        color: new Color("white"),
+      };
+    case FacetVisuals.TextureTest:
+    default:
+      return {
+        uvArray: uvTestArray,
+        textureSource: "textures/FacetTestTexture.png",
+        color: new Color("lightgray"),
+      };
+  }
+}
+
+export function arrayWithOverwrittenRange(
   startIndex: number,
   length: number,
-  data: number[]
+  data: number[],
+  replace = 0
 ): number[] {
-  return data.map((value, index) =>
-    index >= startIndex && index < startIndex + length ? 0 : value
-  );
+  if (startIndex + length > data.length) {
+    throw new RangeError("attempt to overwrite non-existant data");
+  }
+  if (startIndex < 0 || startIndex % 1 != 0) {
+    throw new TypeError("startIndex must be a non-negative integer");
+  }
+  if (length < 0 || length % 1 != 0) {
+    throw new TypeError("length must be a non-negative integer");
+  }
+  return [...data].fill(replace, startIndex, startIndex + length);
+  // return data.map((value, index) =>
+  //   index >= startIndex && index < startIndex + length ? replace : value
+  // );
 }
 
 const Facet = (props: FacetProps) => {
   const facetRef = useRef<Mesh>(null); //Initally null, will be set in the object return.
-  const uvMap = new BufferAttribute(new Float32Array(uvArray), 2);
-
-  // Use 0,0 as the uv index for selected faces
-  const uvSelectedFace = [0, 6, 12, 18].map(
-    (value) =>
-      new BufferAttribute(
-        new Float32Array(zeroArrayRange(value, 6, uvArray)),
-        2
-      )
-  );
-  // Measurements and template at https://www.desmos.com/geometry/bb66bkq2ub
-
   const verticesOfTetra = [
     new Vector3(0, 0, 0),
     new Vector3(0.5, 0.5, 0.5),
     new Vector3(0.5, -0.5, 0.5),
     new Vector3(0.5, 0, 0),
   ];
-  const [defaultTextureMap] = useTexture(["textures/FacetTestTexture.png"]);
+  const visuals = getVisualDetails(props.visual ?? FacetVisuals.TextureTest);
+
+  const uvMap = new BufferAttribute(new Float32Array(visuals.uvArray), 2);
+  // Use 0,0 as the uv index for selected faces
+  const uvSelectedFace = [0, 6, 12, 18].map(
+    (value) =>
+      new BufferAttribute(
+        new Float32Array(arrayWithOverwrittenRange(value, 6, visuals.uvArray)),
+        2
+      )
+  );
+  // Measurements and template at https://www.desmos.com/geometry/bb66bkq2ub
+  const [TextureMap] = useTexture([visuals.textureSource]);
 
   const [selectedFace, setSelectedFace] = useState<undefined | number>(
     undefined
   );
 
   useEffect(() => {
-    //     console.log("useEffect happened");
-    // if (facetRef.current) {
-    //   console.log("useEffect: " + selectedFace);
-    // }
-
     if (selectedFace == undefined) {
       facetRef.current?.geometry.setAttribute("uv", uvMap);
     } else {
@@ -88,7 +147,7 @@ const Facet = (props: FacetProps) => {
       );
     }
   });
-
+  console.log(`rendering ${props.facetKey}`);
   return (
     <mesh
       {...props}
@@ -106,10 +165,7 @@ const Facet = (props: FacetProps) => {
       )}
     >
       <IrregularTetrahedronGeometry vertices={verticesOfTetra} />
-      <meshStandardMaterial
-        color={"lightgray"}
-        map={props.texture ?? defaultTextureMap}
-      />
+      <meshStandardMaterial color={visuals.color} map={TextureMap} />
     </mesh>
   );
 };

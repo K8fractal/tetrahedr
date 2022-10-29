@@ -13,7 +13,12 @@ interface TetrahedronGeometryProps extends BufferGeometryProps {
 export const IrregularTetrahedronGeometry = (
   props: TetrahedronGeometryProps
 ) => {
-  const indicesOfFaces = [1, 2, 3, 3, 0, 1, 2, 1, 0, 0, 3, 2];
+  // prettier-ignore
+  const indicesOfFaces = 
+   [1, 2, 3, 
+    3, 0, 1, 
+    2, 1, 0, 
+    0, 3, 2];
 
   const vertices = computeFullVertexArray(props.vertices, indicesOfFaces);
 
