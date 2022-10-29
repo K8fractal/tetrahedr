@@ -3,6 +3,7 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 //import Facet from "./Facet";
 import { FacetStructure } from "./facetStructure";
+import { ToolModeContextProvider } from "./ToolModeContextProvider";
 // import Cube from "./Cube";
 // import Tetrahedron from "./Tetrahedron";
 // import Triangle from "./Triangle";
@@ -15,7 +16,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <p>Tetrahedr</p>
-        <>
+        <ToolModeContextProvider>
           <Canvas
             className="Three-canvas"
             camera={{ position: [0.1, 0.1, 5.1] }}
@@ -28,7 +29,7 @@ function App() {
             <FacetStructure />
           </Canvas>
           <p>Click on a face to add to the structure.</p>
-        </>
+        </ToolModeContextProvider>
         <p className="footnote">
           <a href="https://github.com/K8fractal/tetrahedr">
             Code for Tetrahedr on github
