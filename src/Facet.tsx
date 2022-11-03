@@ -3,6 +3,7 @@ import { BufferAttribute, Color, Mesh, Vector3 } from "three";
 import { MeshProps } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import { IrregularTetrahedronGeometry } from "./irregularTetrahedron";
+import React from "react";
 
 interface FacetProps extends MeshProps {
   visual?: FacetVisuals;
@@ -170,4 +171,4 @@ const Facet = (props: FacetProps) => {
   );
 };
 
-export default Facet;
+export default React.memo(Facet);

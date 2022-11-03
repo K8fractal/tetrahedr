@@ -4,7 +4,7 @@
 canvas {
   /*border: 1px solid red; DO NOT USE, causes canvas size to increase indefinetly, see https://github.com/pmndrs/react-three-fiber/issues/1684*/
   background-color:#282c34;
-  height: 75vh;
+  height: 80vh;
 }
 
 .App-header {
@@ -13,7 +13,8 @@ canvas {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  
   font-size: calc(10px + 2vmin);
   color: white;
 }
@@ -28,4 +29,40 @@ a {
 
 a:visited {
   color:violet;
+}
+
+.iconRadio {
+  background-color: rgb(255, 255, 255);
+  color: black;
+  font-size: 12px;
+  outline: 2px yellow solid;
+}
+
+/* .iconRadio [type=radio] {
+  opacity: 0;
+  width:0;
+  height: 0;
+  position: absolute;
+} */
+
+img {
+  width: calc(10px+0.5vh);
+}
+
+p {
+  line-height: 0%;
+}
+
+.iconLabel {
+  position: fixed;
+}
+
+.iconBar { 
+  width: 50%;
+  transform: translateY(80vh);
+  position: fixed;
+  display: flex;
+  justify-content: space-around;
+  /* outline:  3px greenyellow dashed; */
+  padding-bottom: 0;
 }

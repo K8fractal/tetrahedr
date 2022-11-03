@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="48"
+   height="48"
+   viewBox="0 0 12 12"
+   version="1.1"
+   id="svg19694"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   sodipodi:docname="iconAdd.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview19696"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="12.608642"
+     inkscape:cx="65.470968"
+     inkscape:cy="9.3190052"
+     inkscape:window-width="3840"
+     inkscape:window-height="2071"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs19691" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:#2a2aff;stroke-width:0.79375"
+       d="M 1,10 6,3 11,10"
+       id="path20734"
+       sodipodi:nodetypes="ccc" />
+    <path
+       style="fill:#000080;stroke-width:0.79375"
+       d="M 1,10 6,7 11,10"
+       id="path20785"
+       sodipodi:nodetypes="ccc" />
+    <path
+       style="fill:#5555ff;stroke-width:0.79375"
+       d="M 6,7 6,3 11,10"
+       id="path24071"
+       sodipodi:nodetypes="ccc" />
+    <text
+       xml:space="preserve"
+       style="font-size:6.66667px;fill:#000000;stroke-width:0.22825"
+       x="5.9284739"
+       y="7.455204"
+       id="text27998"><tspan
+         sodipodi:role="line"
+         id="tspan27996"
+         style="font-size:6.66667px;stroke-width:0.22825"
+         x="5.9284739"
+         y="7.455204">+</tspan></text>
+  </g>
+</svg>

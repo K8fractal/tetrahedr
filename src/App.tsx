@@ -4,6 +4,7 @@ import { OrbitControls } from "@react-three/drei";
 //import Facet from "./Facet";
 import { FacetStructure } from "./facetStructure";
 import { ToolModeContextProvider } from "./ToolModeContextProvider";
+import { RadioSelect } from "./RadioSelect";
 // import Cube from "./Cube";
 // import Tetrahedron from "./Tetrahedron";
 // import Triangle from "./Triangle";
@@ -28,6 +29,15 @@ function App() {
 
             <FacetStructure />
           </Canvas>
+          <div className="iconBar">
+            <RadioSelect label="Add" iconSource="iconAdd.svg" group="mode" />
+            <RadioSelect
+              label="Remove"
+              iconSource="iconRemove.svg"
+              group="mode"
+            />
+          </div>
+
           <p>Click on a face to add to the structure.</p>
         </ToolModeContextProvider>
         <p className="footnote">
