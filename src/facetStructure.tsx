@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { ThreeEvent } from "@react-three/fiber";
+import { useContext, useState } from "react";
 import { Quaternion, Vector3 } from "three";
 import Facet, { FaceDescription, FacetVisuals, nextVisual } from "./Facet";
+import { ToolModeContext } from "./ToolModeContextProvider";
 
 export interface FacetData {
   key: string;
@@ -50,7 +52,7 @@ export function adjacentFacet(
       result.quaternion.multiply(new Quaternion(0, 0, 1, 0));
       break;
     default: // should never happen
-      result.key += "_d_";
+      result.key += "_unexpectedDefault_";
       result.position.x += 1;
   }
   return result;
@@ -68,14 +70,33 @@ export const FacetStructure = (props: Record<string, never>) => {
   };
 
   const [facets, setFacets] = useState([baseFacet]);
+  const { getMode } = useContext(ToolModeContext);
+
+  const handleClick = (
+    event: ThreeEvent<MouseEvent>,
+    facet: FacetData,
+    facetIndex: number
+  ): void => {
+    const mode = getMode();
+    console.log(mode);
+    switch (mode) {
+      case "add":
+        setFacets([...facets, adjacentFacet(facet, event.faceIndex)]);
+        return;
+      case "remove":
+        setFacets([
+          ...facets.slice(0, facetIndex),
+          ...facets.slice(facetIndex + 1),
+        ]);
+    }
+  };
 
   return (
     <group>
       {facets.map((current: FacetData, index) => (
         <Facet
           onClick={(event) => (
-            event.stopPropagation(),
-            setFacets([...facets, adjacentFacet(current, event.faceIndex)])
+            event.stopPropagation(), handleClick(event, current, index)
           )}
           onContextMenu={(event) => {
             event.stopPropagation();

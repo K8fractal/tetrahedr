@@ -148,7 +148,7 @@ const Facet = (props: FacetProps) => {
       );
     }
   });
-  console.log(`rendering ${props.facetKey}`);
+  //console.log(`rendering ${props.facetKey}`);
   return (
     <mesh
       {...props}

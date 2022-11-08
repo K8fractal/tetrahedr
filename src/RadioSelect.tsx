@@ -8,8 +8,8 @@ interface RadioProps {
 
 export const RadioSelect = (props: RadioProps) => {
   return (
-    <div className="iconRadio">
-      <label className={props.selected ? "iconSelect" : "iconDeselected"}>
+    <div className={props.selected ? "iconSelect" : "iconRadio"}>
+      <label>
         <input
           type="radio"
           checked={props.selected}

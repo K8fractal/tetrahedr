@@ -31,22 +31,33 @@ a:visited {
   color:violet;
 }
 
-.iconRadio {
-  background-color: rgb(255, 255, 255);
+.iconRadio, .iconSelect {
   color: black;
   font-size: 12px;
-  outline: 2px yellow solid;
+  border-radius: 5px;
 }
 
-/* .iconRadio [type=radio] {
+.iconRadio {
+  background-color: lightgrey;
+}
+
+.iconRadio:hover {
+  outline: 2px white solid;
+}
+
+.iconSelect {
+  background-color: white;
+}
+
+[type=radio] {
   opacity: 0;
   width:0;
   height: 0;
   position: absolute;
-} */
+}
 
 img {
-  width: calc(10px+0.5vh);
+  width:50px;
 }
 
 p {
@@ -55,14 +66,27 @@ p {
 
 .iconLabel {
   position: fixed;
+  text-align: center;
+  width: 50px;
 }
 
 .iconBar { 
-  width: 50%;
+  width: 30%;
   transform: translateY(80vh);
   position: fixed;
-  display: flex;
-  justify-content: space-around;
-  /* outline:  3px greenyellow dashed; */
+  align-self: end;
+  /* outline:  3px greenyellow dashed;  */
   padding-bottom: 0;
+}
+
+
+.iconBar p {
+  align-self: end;
+  justify-self: end;
+}
+
+
+.radioBar {
+  display: flex;
+  justify-content: space-evenly;
 }
