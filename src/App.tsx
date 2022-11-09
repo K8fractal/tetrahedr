@@ -24,9 +24,6 @@ function App() {
           <FacetStructure />
         </Canvas>
         <ToolModeSelector />
-          <p>
-            Right click to change color scheme
-          </p>
         <p className="footnote">
           <a href="https://github.com/K8fractal/tetrahedr">
             Code for Tetrahedr on github

@@ -85,6 +85,16 @@ p {
   font-size: calc(2px + 2vmin);
 } 
 
+.mobileHide {
+  visibility: visible;
+}
+
+@media only screen and (max-width: 600px) {
+  .mobileHide {
+    visibility: hidden;
+  }
+}
+
 
 .radioBar {
   display: flex;
