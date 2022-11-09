@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useModeStore } from "./modeStore";
 import { RadioSelect } from "./RadioSelect";
 
 interface RadioGroupProps {
@@ -6,7 +7,9 @@ interface RadioGroupProps {
 }
 
 export const ToolModeSelector = (props: RadioGroupProps) => {
-  const [mode, setMode] = useState("add");
+  //const [mode, setMode] = useState("add");
+  const mode = useModeStore((state) => state.mode);
+  const setMode = useModeStore((state) => state.setMode);
 
   return (
     <div className="iconBar">
