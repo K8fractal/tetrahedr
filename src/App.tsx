@@ -3,6 +3,7 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 //import Facet from "./Facet";
 import { FacetStructure } from "./facetStructure";
+import { ToolModeSelector } from "./ToolModeSelector";
 // import Cube from "./Cube";
 // import Tetrahedron from "./Tetrahedron";
 // import Triangle from "./Triangle";
@@ -15,23 +16,14 @@ function App() {
     <div className="App">
       <header className="App-header">
         <p>Tetrahedr</p>
-        <>
-          <Canvas
-            className="Three-canvas"
-            camera={{ position: [0.1, 0.1, 5.1] }}
-          >
-            <OrbitControls />
-            <ambientLight intensity={0.5} />
-            <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-            <pointLight position={[-10, -10, -10]} />
-
-            <FacetStructure />
-          </Canvas>
-          <p>
-            Click on a face to add to the structure. <br></br>Right click to
-            change color scheme
-          </p>
-        </>
+        <Canvas className="Three-canvas" camera={{ position: [0.1, 0.1, 5.1] }}>
+          <OrbitControls />
+          <ambientLight intensity={0.5} />
+          <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
+          <pointLight position={[-10, -10, -10]} />
+          <FacetStructure />
+        </Canvas>
+        <ToolModeSelector />
         <p className="footnote">
           <a href="https://github.com/K8fractal/tetrahedr">
             Code for Tetrahedr on github

@@ -4,7 +4,7 @@
 canvas {
   /*border: 1px solid red; DO NOT USE, causes canvas size to increase indefinetly, see https://github.com/pmndrs/react-three-fiber/issues/1684*/
   background-color:#282c34;
-  height: 75vh;
+  height: 80vh;
 }
 
 .App-header {
@@ -13,13 +13,14 @@ canvas {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  
   font-size: calc(10px + 2vmin);
   color: white;
 }
 
 .footnote {
-  font-size: calc(10px + 0.5vmin);
+  font-size: calc(2px + 2vmin);
 }
 
 a {
@@ -28,4 +29,74 @@ a {
 
 a:visited {
   color:violet;
+}
+
+.iconRadio, .iconSelect {
+  color: black;
+  border-radius: 5px;
+}
+
+.iconRadio {
+  background-color: lightgrey;
+}
+
+.iconRadio:hover {
+  outline: 4px white solid;
+}
+
+.iconSelect {
+  background-color: white;
+}
+
+[type=radio] {
+  opacity: 0;
+  width:0;
+  height: 0;
+  position: absolute;
+}
+
+img {
+  width: 10vmin;
+}
+
+p {
+  line-height: 0%;
+}
+
+.iconLabel {
+  position: fixed;
+  text-align: center;
+  transform: translateY(0.5vmin);
+  width: 10vmin;
+  font-size: calc(2px + 2vmin);
+}
+
+.iconBar { 
+  width: 30%;
+  transform: translateY(80vh);
+  position: fixed;
+  align-self: end;
+  /* outline:  3px greenyellow dashed;  */
+  padding-bottom: 0;
+}
+
+
+.iconBar p {
+  font-size: calc(2px + 2vmin);
+} 
+
+.mobileHide {
+  visibility: visible;
+}
+
+@media only screen and (max-width: 600px) {
+  .mobileHide {
+    visibility: hidden;
+  }
+}
+
+
+.radioBar {
+  display: flex;
+  justify-content: space-evenly;
 }

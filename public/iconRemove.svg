@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="48"
+   height="48"
+   viewBox="0 0 12 12"
+   version="1.1"
+   id="svg19694"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   sodipodi:docname="iconRemove.svg"
+   inkscape:export-filename="iconRemove.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview19696"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="12.608642"
+     inkscape:cx="65.470968"
+     inkscape:cy="28.353569"
+     inkscape:window-width="3822"
+     inkscape:window-height="2071"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs19691">
+    <rect
+       x="25.775971"
+       y="10.706942"
+       width="21.731126"
+       height="16.496621"
+       id="rect27787" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       style="font-size:8px;white-space:pre;inline-size:2.67454;display:none;fill:#000000;stroke-width:2.41757"
+       x="6.3112388"
+       y="5.3094101"
+       id="text20520"
+       transform="scale(1.2087865,0.82727594)" />
+    <path
+       style="fill:#7a7aaf;stroke-width:0.79375;fill-opacity:1"
+       d="M 1,11 6,4 11,11"
+       id="path20734"
+       sodipodi:nodetypes="ccc" />
+    <path
+       style="fill:#303050;stroke-width:0.79375;fill-opacity:1"
+       d="M 1,11 6,8 11,11"
+       id="path20785"
+       sodipodi:nodetypes="ccc" />
+    <path
+       style="fill:#9595c0;stroke-width:0.79375;stroke:none;fill-opacity:1"
+       d="M 6,8 6,4 11,11"
+       id="path24071"
+       sodipodi:nodetypes="ccc" />
+    <text
+       xml:space="preserve"
+       transform="scale(0.25)"
+       id="text27785"
+       style="font-size:16px;white-space:pre;shape-inside:url(#rect27787);display:inline;fill:#7a7aaf;fill-opacity:1;stroke:none;stroke-width:0.913;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       style="fill:#000000;stroke-width:0.22825"
+       id="rect522"
+       width="3.7"
+       height="1"
+       x="6.75"
+       y="5.75" />
+  </g>
+</svg>
