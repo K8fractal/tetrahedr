@@ -20,7 +20,7 @@ canvas {
 }
 
 .footnote {
-  font-size: calc(10px + 0.5vmin);
+  font-size: calc(2px + 2vmin);
 }
 
 a {
@@ -33,7 +33,6 @@ a:visited {
 
 .iconRadio, .iconSelect {
   color: black;
-  font-size: 12px;
   border-radius: 5px;
 }
 
@@ -42,7 +41,7 @@ a:visited {
 }
 
 .iconRadio:hover {
-  outline: 2px white solid;
+  outline: 4px white solid;
 }
 
 .iconSelect {
@@ -57,7 +56,7 @@ a:visited {
 }
 
 img {
-  width:50px;
+  width: 10vmin;
 }
 
 p {
@@ -67,7 +66,9 @@ p {
 .iconLabel {
   position: fixed;
   text-align: center;
-  width: 50px;
+  transform: translateY(0.5vmin);
+  width: 10vmin;
+  font-size: calc(2px + 2vmin);
 }
 
 .iconBar { 
@@ -81,9 +82,8 @@ p {
 
 
 .iconBar p {
-  align-self: end;
-  justify-self: end;
-}
+  font-size: calc(2px + 2vmin);
+} 
 
 
 .radioBar {

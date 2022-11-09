@@ -28,12 +28,12 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="12.608642"
-     inkscape:cx="65.391655"
-     inkscape:cy="28.274257"
-     inkscape:window-width="3840"
+     inkscape:cx="65.470968"
+     inkscape:cy="28.353569"
+     inkscape:window-width="3822"
      inkscape:window-height="2071"
-     inkscape:window-x="-32000"
-     inkscape:window-y="-32000"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="0"
      inkscape:current-layer="layer1" />
   <defs
@@ -58,17 +58,17 @@
        transform="scale(1.2087865,0.82727594)" />
     <path
        style="fill:#7a7aaf;stroke-width:0.79375;fill-opacity:1"
-       d="M 1,10 6,3 11,10"
+       d="M 1,11 6,4 11,11"
        id="path20734"
        sodipodi:nodetypes="ccc" />
     <path
        style="fill:#303050;stroke-width:0.79375;fill-opacity:1"
-       d="M 1,10 6,7 11,10"
+       d="M 1,11 6,8 11,11"
        id="path20785"
        sodipodi:nodetypes="ccc" />
     <path
        style="fill:#9595c0;stroke-width:0.79375;stroke:none;fill-opacity:1"
-       d="M 6,7 6,3 11,10"
+       d="M 6,8 6,4 11,11"
        id="path24071"
        sodipodi:nodetypes="ccc" />
     <text
@@ -76,16 +76,12 @@
        transform="scale(0.25)"
        id="text27785"
        style="font-size:16px;white-space:pre;shape-inside:url(#rect27787);display:inline;fill:#7a7aaf;fill-opacity:1;stroke:none;stroke-width:0.913;stroke-dasharray:none;stroke-opacity:1" />
-    <text
-       xml:space="preserve"
-       style="font-size:12px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.22825;stroke-dasharray:none;stroke-opacity:1"
-       x="5.730197"
-       y="8.3474483"
-       id="text27793"><tspan
-         sodipodi:role="line"
-         id="tspan27791"
-         style="font-size:12px;fill:#000000;stroke-width:0.22825"
-         x="5.730197"
-         y="8.3474483">-</tspan></text>
+    <rect
+       style="fill:#000000;stroke-width:0.22825"
+       id="rect522"
+       width="3.7"
+       height="1"
+       x="6.75"
+       y="5.75" />
   </g>
 </svg>

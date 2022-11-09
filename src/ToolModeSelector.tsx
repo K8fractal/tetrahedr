@@ -1,10 +1,19 @@
-import { useState } from "react";
-import { useModeStore } from "./modeStore";
+import { Mode, useModeStore } from "./modeStore";
 import { RadioSelect } from "./RadioSelect";
 
 interface RadioGroupProps {
   name?: string;
 }
+const toolTip = (mode: Mode): string => {
+  switch (mode) {
+    case "add":
+      return "Click on face to add.";
+    case "remove":
+      return "Click to remove.";
+    default:
+      return "";
+  }
+};
 
 export const ToolModeSelector = (props: RadioGroupProps) => {
   //const [mode, setMode] = useState("add");
@@ -21,7 +30,6 @@ export const ToolModeSelector = (props: RadioGroupProps) => {
           selected={mode == "add"}
           onChange={() => {
             setMode("add");
-            console.log(mode);
           }}
         />
         <RadioSelect
@@ -31,13 +39,10 @@ export const ToolModeSelector = (props: RadioGroupProps) => {
           selected={mode == "remove"}
           onChange={() => {
             setMode("remove");
-            console.log(mode);
           }}
         />
       </div>
-      <p className="footnote">
-        Click on a face to <strong>{mode}</strong> to the structure.
-      </p>
+      <p>{toolTip(mode)}</p>
     </div>
   );
 };
