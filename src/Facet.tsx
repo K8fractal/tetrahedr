@@ -38,8 +38,8 @@ export function nextVisual(visual?: FacetVisuals): FacetVisuals | undefined {
     case FacetVisuals.TextureTest:
       return FacetVisuals.TexturePurpleRed;
     case FacetVisuals.TexturePurpleRed:
-      return FacetVisuals.TextureUV;
-    case FacetVisuals.TextureUV:
+      return FacetVisuals.TextureEdgeHighlight;
+    case FacetVisuals.TextureUV: //Skipped for now
       return FacetVisuals.TextureEdgeHighlight;
     case FacetVisuals.TextureEdgeHighlight:
       return FacetVisuals.TextureTest;

@@ -21,10 +21,12 @@ function App() {
           <ambientLight intensity={0.5} />
           <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
           <pointLight position={[-10, -10, -10]} />
-
           <FacetStructure />
         </Canvas>
         <ToolModeSelector />
+          <p>
+            Right click to change color scheme
+          </p>
         <p className="footnote">
           <a href="https://github.com/K8fractal/tetrahedr">
             Code for Tetrahedr on github
