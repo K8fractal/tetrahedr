@@ -1,13 +1,12 @@
-import { useContext } from "react";
+import { useState } from "react";
 import { RadioSelect } from "./RadioSelect";
-import { ToolModeContext } from "./ToolModeContextProvider";
 
 interface RadioGroupProps {
   name?: string;
 }
 
 export const ToolModeSelector = (props: RadioGroupProps) => {
-  const { mode, setMode } = useContext(ToolModeContext);
+  const [mode, setMode] = useState("add");
 
   return (
     <div className="iconBar">

@@ -2,7 +2,6 @@ import { ThreeEvent } from "@react-three/fiber";
 import { useContext, useState } from "react";
 import { Quaternion, Vector3 } from "three";
 import Facet, { FaceDescription, FacetVisuals, nextVisual } from "./Facet";
-import { ToolModeContext } from "./ToolModeContextProvider";
 
 export interface FacetData {
   key: string;
@@ -70,24 +69,23 @@ export const FacetStructure = (props: Record<string, never>) => {
   };
 
   const [facets, setFacets] = useState([baseFacet]);
-  const { getMode } = useContext(ToolModeContext);
 
   const handleClick = (
     event: ThreeEvent<MouseEvent>,
     facet: FacetData,
     facetIndex: number
   ): void => {
-    const mode = getMode();
+    const mode = "add";
     console.log(mode);
     switch (mode) {
       case "add":
         setFacets([...facets, adjacentFacet(facet, event.faceIndex)]);
         return;
-      case "remove":
-        setFacets([
-          ...facets.slice(0, facetIndex),
-          ...facets.slice(facetIndex + 1),
-        ]);
+      // case "remove":
+      //   setFacets([
+      //     ...facets.slice(0, facetIndex),
+      //     ...facets.slice(facetIndex + 1),
+      // ]);
     }
   };
 
