@@ -1,6 +1,8 @@
+import { ThreeEvent } from "@react-three/fiber";
 import { useState } from "react";
 import { Quaternion, Vector3 } from "three";
 import Facet, { FaceDescription, FacetVisuals, nextVisual } from "./Facet";
+import { useModeStore } from "./modeStore";
 
 export interface FacetData {
   key: string;
@@ -50,7 +52,7 @@ export function adjacentFacet(
       result.quaternion.multiply(new Quaternion(0, 0, 1, 0));
       break;
     default: // should never happen
-      result.key += "_d_";
+      result.key += "_unexpectedDefault_";
       result.position.x += 1;
   }
   return result;
@@ -64,22 +66,40 @@ export const FacetStructure = (props: Record<string, never>) => {
     key: "base_",
     position: new Vector3(0, 1, 0),
     quaternion: new Quaternion(SQRT1_2, -SQRT1_2, 0, 0),
-    visual: FacetVisuals.TextureTest,
+    visual: FacetVisuals.TexturePurpleRed,
   };
 
   const [facets, setFacets] = useState([baseFacet]);
+  const mode = useModeStore((state) => state.mode);
+
+  const handleClick = (
+    event: ThreeEvent<MouseEvent>,
+    facet: FacetData,
+    facetIndex: number
+  ): void => {
+    // eslint-disable-next-line @typescript-eslint/no-inferrable-types
+    console.log("handleClick: " + mode);
+    switch (mode) {
+      case "add":
+        setFacets([...facets, adjacentFacet(facet, event.faceIndex)]);
+        return;
+      case "remove":
+        setFacets([
+          ...facets.slice(0, facetIndex),
+          ...facets.slice(facetIndex + 1),
+        ]);
+    }
+  };
 
   return (
     <group>
       {facets.map((current: FacetData, index) => (
         <Facet
           onClick={(event) => (
-            event.stopPropagation(),
-            setFacets([...facets, adjacentFacet(current, event.faceIndex)])
+            event.stopPropagation(), handleClick(event, current, index)
           )}
           onContextMenu={(event) => {
             event.stopPropagation();
-
             current.visual = nextVisual(current.visual);
             setFacets([...facets]); //update the state
             // console.log(
