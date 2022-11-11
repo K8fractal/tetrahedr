@@ -62,10 +62,14 @@ export function adjacentFacet(
 export const FacetStructure = (props: Record<string, never>) => {
   const SQRT1_2 = Math.SQRT1_2;
 
+  //slight offset prevents flicker on andriod
+  const startingQuaternion = new Quaternion(SQRT1_2, -SQRT1_2, 0.1, 0.1);
+  startingQuaternion.normalize();
+
   const baseFacet: FacetData = {
     key: "base_",
     position: new Vector3(0, 1, 0),
-    quaternion: new Quaternion(SQRT1_2, -SQRT1_2, 0, 0),
+    quaternion: startingQuaternion,
     visual: FacetVisuals.TexturePurpleRed,
   };
 
