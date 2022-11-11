@@ -11,7 +11,6 @@ This is my learning project for [Three.js](https://threejs.org/). I was inspired
 - more colors options
 
 ## Known bugs
-- flicker on some andriod phones
 - After adding blocks at the edge of view, remove works inconsistently
 
 ## Bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
