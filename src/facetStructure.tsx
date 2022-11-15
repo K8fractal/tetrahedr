@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Quaternion, Vector3 } from "three";
 import Facet, { FaceDescription, FacetVisuals, nextVisual } from "./Facet";
 import { useModeStore } from "./modeStore";
+import { useStructureStore } from "./structureStore";
 
 export interface FacetData {
   key: string;
@@ -58,22 +59,38 @@ export function adjacentFacet(
   return result;
 }
 
+const baseFacet: FacetData = {
+  key: "base_",
+  position: new Vector3(0, 1, 0),
+  //to prevent flicker on andriod, slight offset from Quaternion(SQRT1_2, -SQRT1_2, 0, 0)
+  quaternion: new Quaternion(
+    0.7070360811132631,
+    -0.7070360811132631,
+    0.009999000149975004,
+    0.009999000149975004
+  ),
+  visual: FacetVisuals.TexturePurpleRed,
+};
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const FacetStructure = (props: Record<string, never>) => {
-  const SQRT1_2 = Math.SQRT1_2;
+  // const SQRT1_2 = Math.SQRT1_2;
+  // //slight offset prevents flicker on andriod
+  // const startingQuaternion = new Quaternion(SQRT1_2, -SQRT1_2, 0.01, 0.01);
+  // startingQuaternion.normalize();
+  // const baseFacet: FacetData = {
+  //   key: "base_",
+  //   position: new Vector3(0, 1, 0),
+  //   quaternion: startingQuaternion,
+  //   visual: FacetVisuals.TexturePurpleRed,
+  // };
 
-  //slight offset prevents flicker on andriod
-  const startingQuaternion = new Quaternion(SQRT1_2, -SQRT1_2, 0.01, 0.01);
-  startingQuaternion.normalize();
+  const facets = useStructureStore((state) => state.structure);
+  const setFacets = useStructureStore((state) => state.setStructure);
+  if (facets.length == 0) {
+    setFacets([baseFacet]);
+  }
+  //const [facets, setFacets] = useState([baseFacet]);
 
-  const baseFacet: FacetData = {
-    key: "base_",
-    position: new Vector3(0, 1, 0),
-    quaternion: startingQuaternion,
-    visual: FacetVisuals.TexturePurpleRed,
-  };
-
-  const [facets, setFacets] = useState([baseFacet]);
   const mode = useModeStore((state) => state.mode);
 
   const handleClick = (
@@ -83,7 +100,14 @@ export const FacetStructure = (props: Record<string, never>) => {
   ): void => {
     switch (mode) {
       case "add":
-        setFacets([...facets, adjacentFacet(facet, event.faceIndex)]);
+        // eslint-disable-next-line no-case-declarations
+        const newFacet = adjacentFacet(facet, event.faceIndex);
+        if (facets.some((facet) => facet.key === newFacet.key)) {
+          //duplicate key
+          console.log("can't add, try zooming out");
+          return;
+        }
+        setFacets([...facets, newFacet]);
         return;
       case "remove":
         setFacets([
