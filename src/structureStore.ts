@@ -27,15 +27,3 @@ export const useStructureStore = create<StructureState>()((set) => ({
     }));
   },
 }));
-
-/*case "add":
-        setFacets([...facets, adjacentFacet(facet, event.faceIndex)]);
-        return;
-      case "remove":
-        setFacets([
-          ...facets.slice(0, facetIndex),
-          ...facets.slice(facetIndex + 1),
-        ]);*/
-
-// addFacet: (newFacet: FacetData) => {
-//     set(()=> ({structure: [...structure]}))
