@@ -15,6 +15,7 @@ const toolTip = (mode: Mode): string => {
   }
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const ToolModeSelector = (props: RadioGroupProps) => {
   //const [mode, setMode] = useState("add");
   const mode = useModeStore((state) => state.mode);

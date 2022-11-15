@@ -81,8 +81,6 @@ export const FacetStructure = (props: Record<string, never>) => {
     facet: FacetData,
     facetIndex: number
   ): void => {
-    // eslint-disable-next-line @typescript-eslint/no-inferrable-types
-    console.log("handleClick: " + mode);
     switch (mode) {
       case "add":
         setFacets([...facets, adjacentFacet(facet, event.faceIndex)]);
