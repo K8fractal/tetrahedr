@@ -1,5 +1,4 @@
 import { ThreeEvent } from "@react-three/fiber";
-import { useState } from "react";
 import { Quaternion, Vector3 } from "three";
 import Facet, { FaceDescription, FacetVisuals, nextVisual } from "./Facet";
 import { useModeStore } from "./modeStore";
