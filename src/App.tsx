@@ -1,17 +1,10 @@
 import "./App.css";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
-//import Facet from "./Facet";
 import { FacetStructure } from "./facetStructure";
 import { ToolModeSelector } from "./ToolModeSelector";
-// import Cube from "./Cube";
-// import Tetrahedron from "./Tetrahedron";
-// import Triangle from "./Triangle";
-// import { IrregularTetrahedron } from "./irregularTetrahedron";
-// import { Vector3 } from "three";
 
 function App() {
-  // const SQRT1_2 = Math.SQRT1_2;
   return (
     <div className="App">
       <header className="App-header">

@@ -4,6 +4,11 @@
 
 This is my learning project for [Three.js](https://threejs.org/). I was inspired by to create a virtual building block project based on the geometry of [Shashibo](https://funinmotiontoys.com/pages/getshashibo-home). 
 
+## Latest updates
+11/16/2022
+Bug fix: Remove no longer inconsistently adds blocks after removing several when blocks were added near the edge of view.
+New feature: If you remove the last block, the initial base block will reappear.
+
 ## Roadmap of upcoming features
 (updated 11/9/2022)
 - save and load creations
