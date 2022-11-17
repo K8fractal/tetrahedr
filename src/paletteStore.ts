@@ -1,34 +1,61 @@
-import { Color } from "three";
+import { Color } from "react-color";
 import create from "zustand";
 
-interface Visuals {
+interface Visual {
   getVisual: () => HTMLCanvasElement;
 }
 
 interface PaletteState {
-  palette: Visuals[];
+  palette: Visual[];
   highlightColor: Color;
-  //   changeVisual: (
-  //     index: number,
-  //     /*patternKey,*/ mainColor: Color,
-  //     accentColor: Color
-  //   ) => void;
+  changeVisual: (
+    index: number,
+    /*patternKey,*/ mainColor: Color,
+    accentColor: Color
+  ) => void;
   //   addVisual: (/*patternKey,*/ mainColor: Color, accentColor: Color) => void;
   //   resetPalette: () => void;
   //   setHighlightColor: (highlight: Color) => void;
 }
-const getLinearVisual = curriedLinearPattern("yellow")("blue")("red");
+const getLinearVisual = curriedLinearPattern("#ffcc00")("blue")("red");
 
 export const usePaletteStore = create<PaletteState>()((set) => ({
-  highlightColor: new Color("#ffcc00"),
+  highlightColor: { r: 255, g: 0xcc, b: 0 },
   palette: [{ getVisual: getLinearVisual }],
+  changeVisual: (
+    index: number,
+    /*patternKey,*/ mainColor: Color,
+    accentColor: Color
+  ) =>
+    set((state) => ({
+      palette: replaceInImmutableArray(
+        {
+          //prettier-ignore
+          getVisual: curriedLinearPattern(state.highlightColor)(mainColor)(accentColor),
+        },
+        index,
+        state.palette
+      ),
+    })),
 }));
 
-function curriedLinearPattern(highlightColor: string) {
-  return (mainColor: string) => {
-    return (accentColor: string) => {
+function replaceInImmutableArray<T>(
+  element: T,
+  index: number,
+  array: T[]
+): T[] {
+  return [...array.slice(0, index), element, ...array.slice(index + 1)];
+}
+
+function curriedLinearPattern(highlightColor: Color) {
+  return (mainColor: Color) => {
+    return (accentColor: Color) => {
       return () => {
-        return linearPattern(highlightColor, mainColor, accentColor);
+        return linearPattern(
+          highlightColor.toString(),
+          mainColor.toString(),
+          accentColor.toString()
+        );
       };
     };
   };
