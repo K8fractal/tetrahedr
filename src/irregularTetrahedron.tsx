@@ -1,6 +1,7 @@
 import { BufferGeometryProps, MeshProps } from "@react-three/fiber";
 import { Vector3 } from "three";
 
+//Switch to vertices to number[][] might improve performance
 interface TetrahedronProps extends MeshProps {
   vertices?: Vector3[];
   color?: string;

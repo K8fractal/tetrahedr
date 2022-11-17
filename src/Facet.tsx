@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { BufferAttribute, Color, Mesh, Vector3 } from "three";
+import { BufferAttribute, CanvasTexture, Color, Mesh, Vector3 } from "three";
 import { MeshProps } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import { IrregularTetrahedronGeometry } from "./irregularTetrahedron";
 import React from "react";
+import { usePaletteStore } from "./paletteStore";
 
 interface FacetProps extends MeshProps {
   visual?: FacetVisuals;
@@ -131,8 +132,11 @@ const Facet = (props: FacetProps) => {
         2
       )
   );
-  // Measurements and template at https://www.desmos.com/geometry/bb66bkq2ub
-  const [TextureMap] = useTexture([visuals.textureSource]);
+
+  const palette = usePaletteStore((state) => state.palette);
+  const TextureMap = new CanvasTexture(palette[0].getVisual());
+
+  //const [TextureMap] = useTexture([visuals.textureSource]);
 
   const [selectedFace, setSelectedFace] = useState<undefined | number>(
     undefined
