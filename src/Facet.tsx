@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { BufferAttribute, CanvasTexture, Color, Mesh, Vector3 } from "three";
 import { MeshProps } from "@react-three/fiber";
-import { useTexture } from "@react-three/drei";
+import shallow from "zustand/shallow";
 import { IrregularTetrahedronGeometry } from "./irregularTetrahedron";
 import React from "react";
 import { usePaletteStore } from "./paletteStore";
@@ -133,7 +133,10 @@ const Facet = (props: FacetProps) => {
       )
   );
 
-  const getVisual = usePaletteStore((state) => state.getVisual);
+  const [getVisual, palette] = usePaletteStore(
+    (state) => [state.getVisual, state.palette],
+    shallow
+  );
   const TextureMap = new CanvasTexture(getVisual(0)());
 
   //const [TextureMap] = useTexture([visuals.textureSource]);
