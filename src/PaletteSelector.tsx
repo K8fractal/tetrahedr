@@ -4,7 +4,9 @@ import { usePaletteStore } from "./paletteStore";
 
 export const PaletteSelector = () => {
   const [color, setColor] = useState("blue");
-  const changeVisual = usePaletteStore((state) => state.changeVisual);
+  const changeVisualMainColor = usePaletteStore(
+    (state) => state.changeVisualMainColor
+  );
   return (
     <div className="paletteBar">
       <SketchPicker
@@ -14,7 +16,7 @@ export const PaletteSelector = () => {
         }}
         onChangeComplete={(color) => {
           setColor(color.hex);
-          changeVisual(0, color.hex, "red");
+          changeVisualMainColor(0, color.hex);
         }}
       />
     </div>

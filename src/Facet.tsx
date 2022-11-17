@@ -133,8 +133,8 @@ const Facet = (props: FacetProps) => {
       )
   );
 
-  const palette = usePaletteStore((state) => state.palette);
-  const TextureMap = new CanvasTexture(palette[0].getVisual());
+  const getVisual = usePaletteStore((state) => state.getVisual);
+  const TextureMap = new CanvasTexture(getVisual(0)());
 
   //const [TextureMap] = useTexture([visuals.textureSource]);
 

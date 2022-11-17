@@ -2,36 +2,42 @@ import { Color } from "react-color";
 import create from "zustand";
 
 interface Visual {
-  getVisual: () => HTMLCanvasElement;
+  pattern: (
+    highlightColor: Color
+  ) => (mainColor: Color) => (accentColor: Color) => () => HTMLCanvasElement;
+  mainColor: Color;
+  accentColor: Color;
 }
 
 interface PaletteState {
   palette: Visual[];
   highlightColor: Color;
-  changeVisual: (
-    index: number,
-    /*patternKey,*/ mainColor: Color,
-    accentColor: Color
-  ) => void;
+  getVisual: (index: number) => () => HTMLCanvasElement;
+  changeVisualMainColor: (index: number, mainColor: Color) => void;
   //   addVisual: (/*patternKey,*/ mainColor: Color, accentColor: Color) => void;
   //   resetPalette: () => void;
   //   setHighlightColor: (highlight: Color) => void;
 }
 const getLinearVisual = curriedLinearPattern("#ffcc00")("blue")("red");
 
-export const usePaletteStore = create<PaletteState>()((set) => ({
+export const usePaletteStore = create<PaletteState>()((set, get) => ({
   highlightColor: { r: 255, g: 0xcc, b: 0 },
-  palette: [{ getVisual: getLinearVisual }],
-  changeVisual: (
-    index: number,
-    /*patternKey,*/ mainColor: Color,
-    accentColor: Color
-  ) =>
+  palette: [
+    { pattern: curriedLinearPattern, mainColor: "blue", accentColor: "red" },
+  ],
+  getVisual: (index: number) => {
+    const visual = get().palette[index];
+    return visual.pattern(get().highlightColor)(visual.mainColor)(
+      visual.accentColor
+    );
+  },
+  changeVisualMainColor: (index: number, newColor: Color) =>
     set((state) => ({
       palette: replaceInImmutableArray(
         {
-          //prettier-ignore
-          getVisual: curriedLinearPattern(state.highlightColor)(mainColor)(accentColor),
+          pattern: state.palette[index].pattern,
+          mainColor: newColor,
+          accentColor: state.palette[index].accentColor,
         },
         index,
         state.palette
