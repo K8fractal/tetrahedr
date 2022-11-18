@@ -9,11 +9,17 @@ interface Visual {
   accentColor: Color;
 }
 
+export type colorPurpose = "MAIN" | "ACCENT" | "HIGHLIGHT";
+
 interface PaletteState {
   palette: Visual[];
   highlightColor: Color;
   getVisual: (index: number) => () => HTMLCanvasElement;
-  changeVisualMainColor: (index: number, mainColor: Color) => void;
+  //changeVisualMainColor: (index: number, mainColor: Color) => void;
+  makeColorSetter: (
+    purpose: colorPurpose,
+    index?: number
+  ) => (color: string) => void;
   //   addVisual: (/*patternKey,*/ mainColor: Color, accentColor: Color) => void;
   //   resetPalette: () => void;
   //   setHighlightColor: (highlight: Color) => void;
@@ -31,18 +37,63 @@ export const usePaletteStore = create<PaletteState>()((set, get) => ({
       visual.accentColor
     );
   },
-  changeVisualMainColor: (index: number, newColor: Color) =>
-    set((state) => ({
-      palette: replaceInImmutableArray(
-        {
-          pattern: state.palette[index].pattern,
-          mainColor: newColor,
-          accentColor: state.palette[index].accentColor,
-        },
-        index,
-        state.palette
-      ),
-    })),
+  //   changeVisualMainColor: (index: number, newColor: Color) =>
+  //     set((state) => ({
+  //       palette: replaceInImmutableArray(
+  //         {
+  //           pattern: state.palette[index].pattern,
+  //           mainColor: newColor,
+  //           accentColor: state.palette[index].accentColor,
+  //         },
+  //         index,
+  //         state.palette
+  //       ),
+  //     })),
+  makeColorSetter: (
+    purpose: colorPurpose,
+    index?: number
+  ): ((color: string) => void) => {
+    switch (purpose) {
+      case "MAIN":
+        if (index === undefined) {
+          throw new TypeError(`must have an index for "MAIN" purpose`);
+        }
+        return function (color) {
+          set((state) => ({
+            palette: replaceInImmutableArray(
+              {
+                pattern: state.palette[index].pattern,
+                mainColor: color,
+                accentColor: state.palette[index].accentColor,
+              },
+              index,
+              state.palette
+            ),
+          }));
+        };
+      case "ACCENT":
+        if (index === undefined) {
+          throw new TypeError(`must have an index for "ACCENT" purpose`);
+        }
+        return function (color) {
+          set((state) => ({
+            palette: replaceInImmutableArray(
+              {
+                pattern: state.palette[index].pattern,
+                mainColor: state.palette[index].mainColor,
+                accentColor: color,
+              },
+              index,
+              state.palette
+            ),
+          }));
+        };
+      case "HIGHLIGHT":
+        return function (color) {
+          set(() => ({ highlightColor: color }));
+        };
+    }
+  },
 }));
 
 function replaceInImmutableArray<T>(

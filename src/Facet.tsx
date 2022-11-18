@@ -187,7 +187,7 @@ const Facet = (props: FacetProps) => {
       )}
     >
       <IrregularTetrahedronGeometry vertices={verticesOfTetra} />
-      <meshStandardMaterial color={"white"} map={TextureMap} />
+      <meshStandardMaterial map={TextureMap} />
     </mesh>
   );
 };

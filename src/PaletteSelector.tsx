@@ -1,34 +1,33 @@
-import { useState } from "react";
-import { SketchPicker } from "react-color";
 import shallow from "zustand/shallow";
+import { ColorSelect } from "./ColorSelect";
 import { usePaletteStore } from "./paletteStore";
 
 export const PaletteSelector = () => {
-  const [color, setColor] = useState("blue");
-  const changeVisualMainColor = usePaletteStore(
-    (state) => state.changeVisualMainColor
-  );
-  const [getVisual, palette, highlightColor] = usePaletteStore(
-    (state) => [state.getVisual, state.palette, state.highlightColor],
+  const [getVisual, palette, highlightColor, makeColorSetter] = usePaletteStore(
+    (state) => [
+      state.getVisual,
+      state.palette,
+      state.highlightColor,
+      state.makeColorSetter,
+    ],
     shallow
   );
+
   return (
     <div className="paletteBar">
-      <SketchPicker
-        disableAlpha={true}
-        color={color}
-        onChange={(color) => {
-          setColor(color.hex);
-        }}
-        onChangeComplete={(color) => {
-          setColor(color.hex);
-          changeVisualMainColor(0, color.hex);
-        }}
+      <ColorSelect
+        colorEffect={makeColorSetter("MAIN", 0)}
+        initialColor="blue"
+      />
+      <ColorSelect
+        colorEffect={makeColorSetter("ACCENT", 0)}
+        initialColor="red"
+      />
+      <ColorSelect
+        colorEffect={makeColorSetter("HIGHLIGHT")}
+        initialColor="#ffcc00"
       />
       <img src={getVisual(0)().toDataURL()} />
     </div>
   );
 };
-
-//STUB
-export {};
