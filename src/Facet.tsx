@@ -8,6 +8,7 @@ import { usePaletteStore } from "./paletteStore";
 
 interface FacetProps extends MeshProps {
   visual?: FacetVisuals;
+  paletteSelection?: number;
   facetKey: string;
 }
 
@@ -96,7 +97,8 @@ export function arrayWithOverwrittenRange(
   startIndex: number,
   length: number,
   data: number[],
-  replace = 0
+  replaceX = 0,
+  replaceY?: number
 ): number[] {
   if (startIndex + length > data.length) {
     throw new RangeError("attempt to overwrite non-existant data");
@@ -107,10 +109,17 @@ export function arrayWithOverwrittenRange(
   if (length < 0 || length % 1 != 0) {
     throw new TypeError("length must be a non-negative integer");
   }
-  return [...data].fill(replace, startIndex, startIndex + length);
-  // return data.map((value, index) =>
-  //   index >= startIndex && index < startIndex + length ? replace : value
-  // );
+  if (replaceY === undefined) {
+    return [...data].fill(replaceX, startIndex, startIndex + length);
+  } else {
+    return data.map((value, index) => {
+      if (index >= startIndex && index < startIndex + length) {
+        return index % 2 == 0 ? replaceX : replaceY;
+      } else {
+        return value;
+      }
+    });
+  }
 }
 
 const Facet = (props: FacetProps) => {
@@ -121,25 +130,30 @@ const Facet = (props: FacetProps) => {
     new Vector3(0.5, -0.5, 0.5),
     new Vector3(0.5, 0, 0),
   ];
-  const visuals = getVisualDetails(props.visual ?? FacetVisuals.TextureTest);
 
-  const uvMap = new BufferAttribute(new Float32Array(visuals.uvArray), 2);
+  // prettier-ignore
+  const uvRectArray = [
+    0, 0.5,       0.5, 1,         0, 1, 
+    1,0.293,      1,0.646,        0.5,0.293, 
+    0.5, 1,       0.5, 0.293,     1,0.646, 
+    1,0.646,      1,1,            0.5,1, 
+  ];
+
+  const uvMap = new BufferAttribute(new Float32Array(uvRectArray), 2);
   // Use 0,0 as the uv index for selected faces
   const uvSelectedFace = [0, 6, 12, 18].map(
     (value) =>
       new BufferAttribute(
-        new Float32Array(arrayWithOverwrittenRange(value, 6, visuals.uvArray)),
+        new Float32Array(arrayWithOverwrittenRange(value, 6, uvRectArray)),
         2
       )
   );
 
-  const [getVisual, palette] = usePaletteStore(
-    (state) => [state.getVisual, state.palette],
+  const [getVisual, palette, highlightColor] = usePaletteStore(
+    (state) => [state.getVisual, state.palette, state.highlightColor],
     shallow
   );
   const TextureMap = new CanvasTexture(getVisual(0)());
-
-  //const [TextureMap] = useTexture([visuals.textureSource]);
 
   const [selectedFace, setSelectedFace] = useState<undefined | number>(
     undefined
@@ -173,7 +187,7 @@ const Facet = (props: FacetProps) => {
       )}
     >
       <IrregularTetrahedronGeometry vertices={verticesOfTetra} />
-      <meshStandardMaterial color={visuals.color} map={TextureMap} />
+      <meshStandardMaterial color={"white"} map={TextureMap} />
     </mesh>
   );
 };

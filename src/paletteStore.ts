@@ -18,10 +18,10 @@ interface PaletteState {
   //   resetPalette: () => void;
   //   setHighlightColor: (highlight: Color) => void;
 }
-const getLinearVisual = curriedLinearPattern("#ffcc00")("blue")("red");
+//const getLinearVisual = curriedLinearPattern("#ffcc00")("blue")("red");
 
 export const usePaletteStore = create<PaletteState>()((set, get) => ({
-  highlightColor: { r: 255, g: 0xcc, b: 0 },
+  highlightColor: "#ffcc00",
   palette: [
     { pattern: curriedLinearPattern, mainColor: "blue", accentColor: "red" },
   ],
@@ -82,26 +82,27 @@ function linearPattern(
 
     ctx.fillStyle = mainColor;
     ctx.fillRect(0, 0, 1024, 1024);
+    console.log(highlightColor);
     ctx.fillStyle = highlightColor;
-    ctx.fillRect(0, 1020, 10, 1024);
-    const gradient = ctx.createLinearGradient(0, 0, 512, 512);
+    ctx.fillRect(0, 800, 1024, 1024);
+    const gradient = ctx.createLinearGradient(0, 0, 513, 513);
     gradient.addColorStop(0, accentColor);
     gradient.addColorStop(0.5, mainColor);
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, 512, 512);
-    const vGradient = ctx.createLinearGradient(512, 0, 1024, 0);
+    const vGradient = ctx.createLinearGradient(511, 0, 1024, 0);
     vGradient.addColorStop(0, mainColor);
     vGradient.addColorStop(1, accentColor);
     ctx.fillStyle = vGradient;
-    ctx.fillRect(512, 0, 1024, 724);
+    ctx.fillRect(511, 0, 1024, 725);
 
-    ctx.strokeStyle = mainColor;
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.moveTo(512, 0);
-    ctx.lineTo(1024, 362);
-    ctx.lineTo(512, 724);
-    ctx.stroke();
+    // ctx.strokeStyle = mainColor;
+    // ctx.lineWidth = 3;
+    // ctx.beginPath();
+    // ctx.moveTo(512, 0);
+    // ctx.lineTo(1024, 362);
+    // ctx.lineTo(512, 724);
+    // ctx.stroke();
   } else {
     console.log("Couldn't get context");
   }
