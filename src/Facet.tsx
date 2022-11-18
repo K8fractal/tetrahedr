@@ -28,11 +28,11 @@ export enum FacetVisuals {
 }
 // All facetVisuals list
 
-interface VisualDetails {
+/*interface VisualDetails {
   uvArray: number[];
   textureSource: string;
   color: Color;
-}
+}*/
 
 export function nextVisual(visual?: FacetVisuals): FacetVisuals | undefined {
   console.log(`Swapping visual from ${visual}`);
@@ -48,7 +48,7 @@ export function nextVisual(visual?: FacetVisuals): FacetVisuals | undefined {
   }
 }
 
-function getVisualDetails(key: FacetVisuals): VisualDetails {
+/*function getVisualDetails(key: FacetVisuals): VisualDetails {
   // prettier-ignore
   const uvTestArray = [
   1, 0.5,         0.5, 1,         0.5, 0.5, 
@@ -91,7 +91,7 @@ function getVisualDetails(key: FacetVisuals): VisualDetails {
         color: new Color("lightgray"),
       };
   }
-}
+}*/
 
 export function arrayWithOverwrittenRange(
   startIndex: number,
