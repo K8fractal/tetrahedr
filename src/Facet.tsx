@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { BufferAttribute, CanvasTexture, Color, Mesh, Vector3 } from "three";
+import { BufferAttribute, CanvasTexture, Mesh, Vector3 } from "three";
 import { MeshProps } from "@react-three/fiber";
 import shallow from "zustand/shallow";
 import { IrregularTetrahedronGeometry } from "./irregularTetrahedron";
@@ -149,6 +149,7 @@ const Facet = (props: FacetProps) => {
       )
   );
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [getVisual, palette, highlightColor] = usePaletteStore(
     (state) => [state.getVisual, state.palette, state.highlightColor],
     shallow

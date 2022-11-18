@@ -148,7 +148,7 @@ function linearPattern(
     ctx.fillRect(511, 0, 1024, 725);
 
     // ctx.strokeStyle = mainColor;
-    // ctx.lineWidth = 3;
+    // ctx.lineWidth = 7;
     // ctx.beginPath();
     // ctx.moveTo(512, 0);
     // ctx.lineTo(1024, 362);

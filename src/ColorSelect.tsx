@@ -19,6 +19,16 @@ export const ColorSelect = (props: ColorSelectorProps) => {
         setColor(color.hex);
         props.colorEffect(color.hex);
       }}
+      presetColors={[
+        "#D0021B",
+        "#F5A623",
+        "#F8E71C",
+        "#417505",
+        "#0069E8",
+        "#9013FE",
+        "#000000",
+        "#FFFFFF",
+      ]}
     />
   );
 };
