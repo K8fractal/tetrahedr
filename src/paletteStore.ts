@@ -133,7 +133,6 @@ function linearPattern(
 
     ctx.fillStyle = mainColor;
     ctx.fillRect(0, 0, 1024, 1024);
-    console.log(highlightColor);
     ctx.fillStyle = highlightColor;
     ctx.fillRect(0, 800, 1024, 1024);
     const gradient = ctx.createLinearGradient(0, 0, 513, 513);
