@@ -27,6 +27,10 @@ export const PaletteSelector = () => {
         colorEffect={makeColorSetter("HIGHLIGHT")}
         initialColor="#ffcc00"
       />
+      <ColorSelect
+        colorEffect={makeColorSetter("HIGHLIGHT")}
+        initialColor="green"
+      />
       {/* <img src={getVisual(0)().toDataURL()} /> */}
     </div>
   );

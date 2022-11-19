@@ -35,20 +35,16 @@ a:visited {
   width: 4vmin;
   height: 4vmin;
   outline: 4px white solid;
+  border-radius: 4px;
 }
 
  .popoverContainer {
   position: absolute;
-  bottom: 10%;
-  outline: 2px yellow dashed;
+  bottom: 100%;
+  transform: translateY(-5px);
+  z-index: 2;
 }
 
-.popover {
-  position: absolute;
-  bottom: 10%;
-  z-index: 2;
-outline: 2px red solid;
-} 
 
 .iconRadio, .iconSelect {
   color: black;
@@ -90,19 +86,34 @@ p {
   font-size: calc(2px + 2vmin);
 }
 
-.iconBar { 
-  width: 30%;
+.iconBar, .paletteBar { 
   transform: translateY(80vh);
   position: fixed;
-  align-self: end;
   /* outline:  3px greenyellow dashed;  */
   padding-bottom: 0;
+}
+.iconBar {
+  align-self: flex-end;
+  width: 30%;
 }
 
 
 .iconBar p {
   font-size: calc(2px + 2vmin);
 } 
+
+.radioBar {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.paletteBar {
+  align-self: flex-start;
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
 
 .mobileHide {
   visibility: visible;
@@ -112,16 +123,4 @@ p {
   .mobileHide {
     visibility: hidden;
   }
-}
-
-
-.radioBar {
-  display: flex;
-  justify-content: space-evenly;
-}
-
-.paletteBar {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
 }
