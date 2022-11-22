@@ -28,7 +28,12 @@ export const PaletteSelector = () => {
             initialColor={visual.accentColor}
           />
           <div className="preview">
-            {<img src={getVisual(index)().toDataURL()} />}
+            {
+              <img
+                src={getVisual(index)().toDataURL()}
+                className="previewImage"
+              />
+            }
           </div>
         </div>
       ))}
