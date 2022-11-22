@@ -6,7 +6,7 @@ interface StructureState {
   setStructure: (newStructure: FacetData[]) => void;
   addFacet: (newFacet: FacetData) => void;
   removeFacet: (index: number) => void;
-  // paintFacet FUTURE DEV
+  paintFacet: (index: number, paint: number) => void;
 }
 
 export const useStructureStore = create<StructureState>()((set) => ({
@@ -22,6 +22,15 @@ export const useStructureStore = create<StructureState>()((set) => ({
     set((state) => ({
       structure: [
         ...state.structure.slice(0, index),
+        ...state.structure.slice(index + 1),
+      ],
+    }));
+  },
+  paintFacet: (index: number, paint: number) => {
+    set((state) => ({
+      structure: [
+        ...state.structure.slice(0, index),
+        { ...state.structure[index], visualIndex: paint },
         ...state.structure.slice(index + 1),
       ],
     }));

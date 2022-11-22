@@ -15,16 +15,14 @@ interface PaletteState {
   palette: Visual[];
   highlightColor: Color;
   getVisual: (index: number) => () => HTMLCanvasElement;
-  //changeVisualMainColor: (index: number, mainColor: Color) => void;
   makeColorSetter: (
     purpose: colorPurpose,
     index?: number
   ) => (color: string) => void;
-  //   addVisual: (/*patternKey,*/ mainColor: Color, accentColor: Color) => void;
+  addVisual: () => void;
+  nextPaletteIndex: (paletteIndex: number) => number;
   //   resetPalette: () => void;
-  //   setHighlightColor: (highlight: Color) => void;
 }
-//const getLinearVisual = curriedLinearPattern("#ffcc00")("blue")("red");
 
 export const usePaletteStore = create<PaletteState>()((set, get) => ({
   highlightColor: "#ffcc00",
@@ -37,18 +35,6 @@ export const usePaletteStore = create<PaletteState>()((set, get) => ({
       visual.accentColor
     );
   },
-  //   changeVisualMainColor: (index: number, newColor: Color) =>
-  //     set((state) => ({
-  //       palette: replaceInImmutableArray(
-  //         {
-  //           pattern: state.palette[index].pattern,
-  //           mainColor: newColor,
-  //           accentColor: state.palette[index].accentColor,
-  //         },
-  //         index,
-  //         state.palette
-  //       ),
-  //     })),
   makeColorSetter: (
     purpose: colorPurpose,
     index?: number
@@ -94,6 +80,16 @@ export const usePaletteStore = create<PaletteState>()((set, get) => ({
         };
     }
   },
+  addVisual: () => {
+    const lastIndex = get().palette.length - 1;
+    const newVisual = {
+      pattern: get().palette[lastIndex].pattern,
+      mainColor: get().palette[lastIndex].accentColor,
+      accentColor: get().palette[lastIndex].mainColor,
+    };
+    set((state) => ({ palette: [...state.palette, newVisual] }));
+  },
+  nextPaletteIndex: (paletteIndex) => (paletteIndex + 1) % get().palette.length,
 }));
 
 function replaceInImmutableArray<T>(

@@ -7,7 +7,7 @@ import React from "react";
 import { usePaletteStore } from "./paletteStore";
 
 interface FacetProps extends MeshProps {
-  visual?: FacetVisuals;
+  visualIndex: number;
   paletteSelection?: number;
   facetKey: string;
 }
@@ -19,13 +19,13 @@ export enum FaceDescription {
   LeftSide = 1,
 }
 
-export enum FacetVisuals {
-  TextureTest,
-  TextureEdgeHighlight,
-  TexturePurpleRed,
-  // ColorBlack,
-  TextureUV,
-}
+// export enum FacetVisuals {
+//   TextureTest,
+//   TextureEdgeHighlight,
+//   TexturePurpleRed,
+//   // ColorBlack,
+//   TextureUV,
+// }
 // All facetVisuals list
 
 /*interface VisualDetails {
@@ -34,19 +34,19 @@ export enum FacetVisuals {
   color: Color;
 }*/
 
-export function nextVisual(visual?: FacetVisuals): FacetVisuals | undefined {
-  console.log(`Swapping visual from ${visual}`);
-  switch (visual) {
-    case FacetVisuals.TextureTest:
-      return FacetVisuals.TexturePurpleRed;
-    case FacetVisuals.TexturePurpleRed:
-      return FacetVisuals.TextureEdgeHighlight;
-    case FacetVisuals.TextureUV: //Skipped for now
-      return FacetVisuals.TextureEdgeHighlight;
-    case FacetVisuals.TextureEdgeHighlight:
-      return FacetVisuals.TextureTest;
-  }
-}
+// export function nextVisual(visual?: FacetVisuals): FacetVisuals | undefined {
+//   console.log(`Swapping visual from ${visual}`);
+//   switch (visual) {
+//     case FacetVisuals.TextureTest:
+//       return FacetVisuals.TexturePurpleRed;
+//     case FacetVisuals.TexturePurpleRed:
+//       return FacetVisuals.TextureEdgeHighlight;
+//     case FacetVisuals.TextureUV: //Skipped for now
+//       return FacetVisuals.TextureEdgeHighlight;
+//     case FacetVisuals.TextureEdgeHighlight:
+//       return FacetVisuals.TextureTest;
+//   }
+// }
 
 /*function getVisualDetails(key: FacetVisuals): VisualDetails {
   // prettier-ignore
@@ -154,7 +154,7 @@ const Facet = (props: FacetProps) => {
     (state) => [state.getVisual, state.palette, state.highlightColor],
     shallow
   );
-  const TextureMap = new CanvasTexture(getVisual(0)());
+  const TextureMap = new CanvasTexture(getVisual(props.visualIndex)());
 
   const [selectedFace, setSelectedFace] = useState<undefined | number>(
     undefined

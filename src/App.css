@@ -115,6 +115,24 @@ p {
   justify-content: space-around;
 }
 
+.visualSelector {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 20%;
+  height: 10vmin;
+  outline: 2px red solid;
+  flex-wrap: wrap;
+}
+
+.preview {
+  overflow: hidden;
+  width: 4vmin;
+  height: 4vmin;
+  outline: 4px white solid;
+  border-radius: 4px;
+}
+
 .mobileHide {
   visibility: visible;
 }

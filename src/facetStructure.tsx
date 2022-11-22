@@ -1,21 +1,21 @@
 import { ThreeEvent } from "@react-three/fiber";
 import { Quaternion, Vector3 } from "three";
-import Facet, { FaceDescription, FacetVisuals, nextVisual } from "./Facet";
+import Facet, { FaceDescription } from "./Facet";
 import { useModeStore } from "./modeStore";
+import { usePaletteStore } from "./paletteStore";
 import { useStructureStore } from "./structureStore";
 
 export interface FacetData {
   key: string;
   quaternion: Quaternion;
   position: Vector3;
-  visual?: FacetVisuals;
+  visualIndex: number; //index into palette
 }
 
 export function adjacentCubePosition(startingFacet: FacetData): Vector3 {
   const newPosition = new Vector3(1, 0, 0)
     .applyQuaternion(startingFacet.quaternion)
     .add(startingFacet.position);
-  //console.log(newPosition);
   return newPosition;
 }
 
@@ -27,7 +27,7 @@ export function adjacentFacet(
     key: startingFacet.key,
     position: startingFacet.position.clone(),
     quaternion: startingFacet.quaternion.clone(),
-    visual: startingFacet.visual,
+    visualIndex: startingFacet.visualIndex,
   };
   const SQRT1_2 = Math.SQRT1_2;
 
@@ -68,12 +68,15 @@ const baseFacet: FacetData = {
     0.009999000149975004,
     0.009999000149975004
   ),
-  visual: FacetVisuals.TexturePurpleRed,
+  visualIndex: 0,
 };
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const FacetStructure = (props: Record<string, never>) => {
   const facets = useStructureStore((state) => state.structure);
   const setFacets = useStructureStore((state) => state.setStructure);
+  const paintFacet = useStructureStore((state) => state.paintFacet);
+  const nextVisual = usePaletteStore((state) => state.nextPaletteIndex);
+
   if (facets.length == 0) {
     setFacets([baseFacet]);
   }
@@ -114,17 +117,22 @@ export const FacetStructure = (props: Record<string, never>) => {
           )}
           onContextMenu={(event) => {
             event.stopPropagation();
-            current.visual = nextVisual(current.visual);
-            setFacets([...facets]); //update the state
-            // console.log(
-            //   `right click on ${current.key} face ${event.faceIndex}. visual is now ${current.visual}`
-            // );
+            paintFacet(index, nextVisual(current.visualIndex));
+            console.log(nextVisual(current.visualIndex));
           }}
+          // onContextMenu={(event) => {
+          //   event.stopPropagation();
+          //   current.visual = nextVisual(current.visual);
+          //   setFacets([...facets]); //update the state
+          //   // console.log(
+          //   //   `right click on ${current.key} face ${event.faceIndex}. visual is now ${current.visual}`
+          //   // );
+          // }}
           position={current.position}
           quaternion={current.quaternion}
           key={current.key ?? `facet${index}`}
           facetKey={current.key ?? `facet${index}`}
-          visual={current.visual ?? FacetVisuals.TextureUV}
+          visualIndex={current.visualIndex ?? 0}
         />
       ))}
     </group>
