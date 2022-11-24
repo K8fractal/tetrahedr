@@ -13,7 +13,11 @@ interface Visual {
 
 export type colorPurpose = "MAIN" | "ACCENT" | "HIGHLIGHT";
 
-const patterns: texturePattern[] = [helperPattern, curriedLinearPattern];
+const patterns: texturePattern[] = [
+  curvePattern,
+  helperPattern,
+  curriedLinearPattern,
+];
 
 interface PaletteState {
   palette: Visual[];
@@ -174,6 +178,84 @@ function helperPattern(highlightColor: Color) {
         } else {
           console.log("Couldn't get context");
         }
+        return canvas;
+      };
+    };
+  };
+}
+
+function curvePattern(highlightColor: Color) {
+  return (mainColor: Color) => {
+    return (accentColor: Color) => {
+      return (): HTMLCanvasElement => {
+        const canvas = document.createElement("canvas");
+        canvas.width = 1024;
+        canvas.height = 1024;
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          mainColor = mainColor.toString();
+          highlightColor = highlightColor.toString();
+          accentColor = accentColor.toString();
+          ctx.fillStyle = mainColor;
+          ctx.fillRect(0, 0, 1024, 1024);
+          ctx.fillStyle = highlightColor;
+          ctx.fillRect(0, 800, 1024, 1024);
+          // Boilerplate complete
+
+          const gradient = ctx.createRadialGradient(0, 0, 16, 0, 0, 512);
+          gradient.addColorStop(0, accentColor);
+          gradient.addColorStop(0.8, mainColor);
+          ctx.fillStyle = gradient;
+          ctx.fillRect(0, 0, 512, 512);
+          const vGradient = ctx.createLinearGradient(512, 0, 1024, 0);
+          vGradient.addColorStop(0, mainColor);
+          vGradient.addColorStop(1, accentColor);
+          ctx.fillStyle = vGradient;
+          ctx.beginPath();
+          ctx.ellipse(
+            512,
+            362,
+            500,
+            256,
+            0,
+            (3 / 2) * Math.PI,
+            (1 / 2) * Math.PI
+          );
+          ctx.fill();
+
+          ctx.strokeStyle = mainColor;
+          ctx.lineWidth = 15;
+          ctx.beginPath();
+          ctx.moveTo(512, 0);
+          ctx.lineTo(1024, 362);
+          ctx.lineTo(512, 724);
+          ctx.stroke();
+
+          ctx.fillStyle = accentColor;
+          ctx.beginPath();
+          ctx.ellipse(
+            1024,
+            724,
+            64,
+            324,
+            0,
+            (1 / 2) * Math.PI,
+            (3 / 2) * Math.PI
+          );
+          ctx.ellipse(
+            1024,
+            0,
+            64,
+            324,
+            0,
+            (1 / 2) * Math.PI,
+            (3 / 2) * Math.PI
+          );
+          ctx.fill();
+        } else {
+          console.log("Couldn't get context");
+        }
+
         return canvas;
       };
     };
