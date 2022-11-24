@@ -5,15 +5,18 @@
 This is my learning project for [Three.js](https://threejs.org/). I was inspired by to create a virtual building block project based on the geometry of [Shashibo](https://funinmotiontoys.com/pages/getshashibo-home). 
 
 ## Latest updates
+11/24/2022
+New feature: More color options. You can now choose between patterns, and set your own color choices.
+
 11/16/2022
 Bug fix: Remove no longer inconsistently adds blocks after removing several when blocks were added near the edge of view.
 New feature: If you remove the last block, the initial base block will reappear.
 
 ## Roadmap of upcoming features
-(updated 11/9/2022)
+(updated 11/24/2022)
+- paint tool for easier visual switching on mobile
+- another color pattern
 - save and load creations
-- paint tool
-- more colors options
 
 ## Bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

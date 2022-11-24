@@ -47,11 +47,13 @@ export const PaletteSelector = () => {
           </div>
         </div>
       ))}
-      <button onClick={() => addVisual()}>Add visual</button>
-      <ColorSelect
-        colorEffect={makeColorSetter("HIGHLIGHT")}
-        initialColor={highlightColor}
-      />
+      <div className="visualExtras">
+        <button onClick={() => addVisual()}>Add visual</button>
+        <ColorSelect
+          colorEffect={makeColorSetter("HIGHLIGHT")}
+          initialColor={highlightColor}
+        />
+      </div>
     </div>
   );
 };

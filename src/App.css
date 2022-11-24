@@ -31,12 +31,7 @@ a:visited {
   color:violet;
 }
 
-.colorSelection {
-  width: 4vmin;
-  height: 4vmin;
-  border: 4px white solid;
-  border-radius: 4px;
-}
+
 
  .popoverContainer {
   position: absolute;
@@ -54,15 +49,13 @@ a:visited {
   background-color: lightgrey;
 }
 
-.iconRadio:hover, button:hover {
+.iconRadio:hover, button:hover, .colorSelection:hover, .preview:hover {
   outline: 4px white solid;
 }
 
 .iconSelect {
   background-color: white;
 }
-
-
 
 [type=radio] {
   opacity: 0;
@@ -118,7 +111,7 @@ button, .iconLabel {
   justify-content: space-around;
 }
 
-.visualSelector {
+.visualSelector, .visualExtras {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -126,13 +119,25 @@ button, .iconLabel {
   height: 10vmin;
   /* outline: 2px red solid; */
   flex-wrap: wrap;
+  align-items: center;
+}
+.visualSelector {
+  background-color: lightgrey;
+  border-radius: 4px;
+}
+
+.colorSelection {
+  width: 4vmin;
+  height: 4vmin;
+  /* border: 4px white solid; */
+  border-radius: 4px;
 }
 
 .preview {
   overflow: hidden;
   width: 4vmin;
   height: 4vmin;
-  border: 4px white solid;
+  /* border: 4px white solid; */
   border-radius: 4px;
 }
 
