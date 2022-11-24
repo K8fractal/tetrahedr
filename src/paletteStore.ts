@@ -1,4 +1,5 @@
 import { Color } from "react-color";
+import { createJsxSelfClosingElement } from "typescript";
 import create from "zustand";
 
 interface Visual {
@@ -26,9 +27,7 @@ interface PaletteState {
 
 export const usePaletteStore = create<PaletteState>()((set, get) => ({
   highlightColor: "#ffcc00",
-  palette: [
-    { pattern: curriedLinearPattern, mainColor: "blue", accentColor: "red" },
-  ],
+  palette: [{ pattern: helperPattern, mainColor: "blue", accentColor: "red" }],
   getVisual: (index: number) => {
     const visual = get().palette[index];
     return visual.pattern(get().highlightColor)(visual.mainColor)(
@@ -100,6 +99,67 @@ function replaceInImmutableArray<T>(
   return [...array.slice(0, index), element, ...array.slice(index + 1)];
 }
 
+function helperPattern(highlightColor: Color) {
+  return (mainColor: Color) => {
+    return (accentColor: Color) => {
+      return (): HTMLCanvasElement => {
+        const canvas = document.createElement("canvas");
+        canvas.width = 1024;
+        canvas.height = 1024;
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          mainColor = mainColor.toString();
+          highlightColor = highlightColor.toString();
+          accentColor = accentColor.toString();
+          ctx.fillStyle = mainColor;
+          ctx.fillRect(0, 0, 1024, 1024);
+          ctx.fillStyle = highlightColor;
+          ctx.fillRect(0, 800, 1024, 1024);
+          // Boilerplate complete
+
+          // Wireframes
+          ctx.strokeStyle = accentColor;
+          ctx.lineWidth = 15;
+          ctx.beginPath();
+          ctx.moveTo(512, 0);
+          ctx.lineTo(1024, 362);
+          ctx.lineTo(512, 724);
+          ctx.lineTo(512, 0);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(512, 724);
+          ctx.lineTo(1024, 724);
+          ctx.lineTo(1024, 0);
+          ctx.lineTo(0, 0);
+          ctx.lineTo(0, 512);
+          ctx.lineTo(512, 0);
+          ctx.stroke();
+
+          //decorations
+
+          ctx.beginPath();
+          ctx.moveTo(64, 0);
+          ctx.lineTo(0, 64);
+          ctx.stroke();
+
+          ctx.fillStyle = accentColor;
+          ctx.beginPath();
+          ctx.ellipse(512, 362, 64, 64, 0, 0, 2 * Math.PI);
+          ctx.ellipse(1024, 724, 64, 64, 0, 0, 2 * Math.PI);
+          ctx.fill();
+
+          ctx.beginPath();
+          ctx.ellipse(1024, 0, 64, 64, 0, 0, 2 * Math.PI);
+          ctx.stroke();
+        } else {
+          console.log("Couldn't get context");
+        }
+        return canvas;
+      };
+    };
+  };
+}
+
 function curriedLinearPattern(highlightColor: Color) {
   return (mainColor: Color) => {
     return (accentColor: Color) => {
@@ -124,9 +184,6 @@ function linearPattern(
   canvas.height = 1024;
   const ctx = canvas.getContext("2d");
   if (ctx) {
-    //const primaryColor = mainColor.getStyle();
-    //const secondaryColor = accentColor.getStyle();
-
     ctx.fillStyle = mainColor;
     ctx.fillRect(0, 0, 1024, 1024);
     ctx.fillStyle = highlightColor;
