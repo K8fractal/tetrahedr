@@ -34,4 +34,10 @@ describe("testing overwriteArrayRange", () => {
   test("length must be a whole number", () => {
     expect(() => arrayWithOverwrittenRange(0, 2.5, [2, 2, 2, 2])).toThrow();
   });
+
+  test("replacing with xy pair", () => {
+    expect(
+      arrayWithOverwrittenRange(0, 4, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 10, 11)
+    ).toStrictEqual([10, 11, 10, 11, 4, 5, 6, 7, 8, 9]);
+  });
 });

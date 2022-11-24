@@ -45,6 +45,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-color": "^3.0.6",
     "@types/testing-library__jest-dom": "^5.14.5",
     "@types/three": "^0.143.0",
     "@typescript-eslint/eslint-plugin": "^5.38.0",
@@ -53,6 +54,7 @@
     "eslint-config-prettier": "^8.5.0",
     "jest": "^27.5.1",
     "prettier": "^2.7.1",
+    "react-color": "^2.19.3",
     "test-jest": "^1.0.1"
   }
 }

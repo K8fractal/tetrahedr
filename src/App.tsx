@@ -3,6 +3,7 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { FacetStructure } from "./facetStructure";
 import { ToolModeSelector } from "./ToolModeSelector";
+import { PaletteSelector } from "./PaletteSelector";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <pointLight position={[-10, -10, -10]} />
           <FacetStructure />
         </Canvas>
+        <PaletteSelector />
         <ToolModeSelector />
         <p className="footnote">
           <a href="https://github.com/K8fractal/tetrahedr">
