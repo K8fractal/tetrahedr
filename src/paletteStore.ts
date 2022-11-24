@@ -86,9 +86,10 @@ export const usePaletteStore = create<PaletteState>()((set, get) => ({
   addVisual: () => {
     const lastIndex = get().palette.length - 1;
     const newVisual = {
-      patternIndex: get().palette[lastIndex].patternIndex,
-      mainColor: get().palette[lastIndex].accentColor,
-      accentColor: get().palette[lastIndex].mainColor,
+      patternIndex:
+        (get().palette[lastIndex].patternIndex + 1) % patterns.length,
+      mainColor: get().palette[lastIndex].mainColor,
+      accentColor: get().palette[lastIndex].accentColor,
     };
     set((state) => ({ palette: [...state.palette, newVisual] }));
   },
