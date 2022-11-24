@@ -24,11 +24,19 @@ export const PaletteSelector = () => {
 
   return (
     <div className="paletteBar">
+      <div className="visualExtras">
+        <button onClick={() => addVisual()}>Add visual</button>
+        <ColorSelect
+          colorEffect={makeColorSetter("HIGHLIGHT")}
+          initialColor={highlightColor}
+        />
+      </div>
       {palette.map((visual, index) => (
         <div className="visualSelector" key={`paletteItem${index}`}>
           <ColorSelect
             colorEffect={makeColorSetter("MAIN", index)}
             initialColor={visual.mainColor}
+            rightJustify={true}
           />
           <ColorSelect
             colorEffect={makeColorSetter("ACCENT", index)}
@@ -47,13 +55,6 @@ export const PaletteSelector = () => {
           </div>
         </div>
       ))}
-      <div className="visualExtras">
-        <button onClick={() => addVisual()}>Add visual</button>
-        <ColorSelect
-          colorEffect={makeColorSetter("HIGHLIGHT")}
-          initialColor={highlightColor}
-        />
-      </div>
     </div>
   );
 };
