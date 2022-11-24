@@ -146,12 +146,18 @@ button, .iconLabel {
 }
 
 .mobileHide {
-  visibility: visible;
+  display: block;
+}
+.mobileShow {
+  display: none;
 }
 
 @media only screen and (max-width: 600px) {
   .mobileHide {
-    visibility: hidden;
+    display: none;
+  }
+  .mobileShow {
+    display: block;
   }
 }
 

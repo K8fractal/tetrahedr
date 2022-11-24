@@ -15,8 +15,8 @@ New feature: If you remove the last block, the initial base block will reappear.
 ## Roadmap of upcoming features
 (updated 11/24/2022)
 - paint tool for easier visual switching on mobile
-- another color pattern
 - save and load creations
+- another color pattern
 
 ## Bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

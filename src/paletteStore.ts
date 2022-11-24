@@ -14,9 +14,9 @@ interface Visual {
 export type colorPurpose = "MAIN" | "ACCENT" | "HIGHLIGHT";
 
 const patterns: texturePattern[] = [
-  curvePattern,
   helperPattern,
   curriedLinearPattern,
+  curvePattern,
 ];
 
 interface PaletteState {
@@ -35,7 +35,10 @@ interface PaletteState {
 
 export const usePaletteStore = create<PaletteState>()((set, get) => ({
   highlightColor: "#ffcc00",
-  palette: [{ patternIndex: 0, mainColor: "blue", accentColor: "red" }],
+  palette: [
+    { patternIndex: 0, mainColor: "blue", accentColor: "red" },
+    { patternIndex: 1, mainColor: "green", accentColor: "white" },
+  ],
   getVisual: (index: number) => {
     const visual = get().palette[index];
     return patterns[visual.patternIndex](get().highlightColor)(

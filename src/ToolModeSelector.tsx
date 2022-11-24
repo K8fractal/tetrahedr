@@ -44,8 +44,8 @@ export const ToolModeSelector = (props: RadioGroupProps) => {
         />
       </div>
       <p>{toolTip(mode)}</p>
-
-      <p className="mobileHide">Right click to change color.</p>
+      <p className="mobileHide">Right click to change style.</p>
+      <p className="mobileShow">Press and hold for style</p>
     </div>
   );
 };
