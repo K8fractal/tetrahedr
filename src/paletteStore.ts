@@ -6,7 +6,7 @@ type texturePattern = (highlightColor: Color) => (mainColor: Color) => (accentCo
 () => HTMLCanvasElement;
 
 interface Visual {
-  pattern: texturePattern;
+  patternIndex: number;
   mainColor: Color;
   accentColor: Color;
 }
@@ -31,12 +31,12 @@ interface PaletteState {
 
 export const usePaletteStore = create<PaletteState>()((set, get) => ({
   highlightColor: "#ffcc00",
-  palette: [{ pattern: patterns[0], mainColor: "blue", accentColor: "red" }],
+  palette: [{ patternIndex: 0, mainColor: "blue", accentColor: "red" }],
   getVisual: (index: number) => {
     const visual = get().palette[index];
-    return visual.pattern(get().highlightColor)(visual.mainColor)(
-      visual.accentColor
-    );
+    return patterns[visual.patternIndex](get().highlightColor)(
+      visual.mainColor
+    )(visual.accentColor);
   },
   makeColorSetter: (
     purpose: colorPurpose,
@@ -51,7 +51,7 @@ export const usePaletteStore = create<PaletteState>()((set, get) => ({
           set((state) => ({
             palette: replaceInImmutableArray(
               {
-                pattern: state.palette[index].pattern,
+                patternIndex: state.palette[index].patternIndex,
                 mainColor: color,
                 accentColor: state.palette[index].accentColor,
               },
@@ -68,7 +68,7 @@ export const usePaletteStore = create<PaletteState>()((set, get) => ({
           set((state) => ({
             palette: replaceInImmutableArray(
               {
-                pattern: state.palette[index].pattern,
+                patternIndex: state.palette[index].patternIndex,
                 mainColor: state.palette[index].mainColor,
                 accentColor: color,
               },
@@ -86,7 +86,7 @@ export const usePaletteStore = create<PaletteState>()((set, get) => ({
   addVisual: () => {
     const lastIndex = get().palette.length - 1;
     const newVisual = {
-      pattern: get().palette[lastIndex].pattern,
+      patternIndex: get().palette[lastIndex].patternIndex,
       mainColor: get().palette[lastIndex].accentColor,
       accentColor: get().palette[lastIndex].mainColor,
     };
@@ -97,7 +97,8 @@ export const usePaletteStore = create<PaletteState>()((set, get) => ({
     set((state) => ({
       palette: replaceInImmutableArray(
         {
-          pattern: patterns[1],
+          patternIndex:
+            (state.palette[index].patternIndex + 1) % patterns.length,
           mainColor: state.palette[index].mainColor,
           accentColor: state.palette[index].accentColor,
         },
