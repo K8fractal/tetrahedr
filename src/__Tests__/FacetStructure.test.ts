@@ -79,18 +79,21 @@ const baseFacet: FacetData = {
   key: "base_",
   position: new Vector3(0, 1, 0),
   quaternion: new Quaternion(SQRT1_2, -SQRT1_2, 0, 0),
+  visualIndex: 0,
 };
 
 const facet12: FacetData = {
   key: "12",
   position: new Vector3(-1, -3, 5),
   quaternion: new Quaternion(SQRT1_2, 0, 0, -SQRT1_2),
+  visualIndex: 0,
 };
 
 const facet62: FacetData = {
   key: "62",
   position: new Vector3(0, -3, 5),
   quaternion: new Quaternion(0, SQRT1_2, SQRT1_2, 0),
+  visualIndex: 0,
 };
 
 describe("testing adjacentCubePosition", () => {

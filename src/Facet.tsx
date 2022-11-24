@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-import { BufferAttribute, Color, Mesh, Vector3 } from "three";
+import { BufferAttribute, CanvasTexture, Mesh, Vector3 } from "three";
 import { MeshProps } from "@react-three/fiber";
-import { useTexture } from "@react-three/drei";
+import shallow from "zustand/shallow";
 import { IrregularTetrahedronGeometry } from "./irregularTetrahedron";
 import React from "react";
+import { usePaletteStore } from "./paletteStore";
 
 interface FacetProps extends MeshProps {
-  visual?: FacetVisuals;
+  visualIndex: number;
+  paletteSelection?: number;
   facetKey: string;
 }
 
@@ -17,36 +19,36 @@ export enum FaceDescription {
   LeftSide = 1,
 }
 
-export enum FacetVisuals {
-  TextureTest,
-  TextureEdgeHighlight,
-  TexturePurpleRed,
-  // ColorBlack,
-  TextureUV,
-}
+// export enum FacetVisuals {
+//   TextureTest,
+//   TextureEdgeHighlight,
+//   TexturePurpleRed,
+//   // ColorBlack,
+//   TextureUV,
+// }
 // All facetVisuals list
 
-interface VisualDetails {
+/*interface VisualDetails {
   uvArray: number[];
   textureSource: string;
   color: Color;
-}
+}*/
 
-export function nextVisual(visual?: FacetVisuals): FacetVisuals | undefined {
-  console.log(`Swapping visual from ${visual}`);
-  switch (visual) {
-    case FacetVisuals.TextureTest:
-      return FacetVisuals.TexturePurpleRed;
-    case FacetVisuals.TexturePurpleRed:
-      return FacetVisuals.TextureEdgeHighlight;
-    case FacetVisuals.TextureUV: //Skipped for now
-      return FacetVisuals.TextureEdgeHighlight;
-    case FacetVisuals.TextureEdgeHighlight:
-      return FacetVisuals.TextureTest;
-  }
-}
+// export function nextVisual(visual?: FacetVisuals): FacetVisuals | undefined {
+//   console.log(`Swapping visual from ${visual}`);
+//   switch (visual) {
+//     case FacetVisuals.TextureTest:
+//       return FacetVisuals.TexturePurpleRed;
+//     case FacetVisuals.TexturePurpleRed:
+//       return FacetVisuals.TextureEdgeHighlight;
+//     case FacetVisuals.TextureUV: //Skipped for now
+//       return FacetVisuals.TextureEdgeHighlight;
+//     case FacetVisuals.TextureEdgeHighlight:
+//       return FacetVisuals.TextureTest;
+//   }
+// }
 
-function getVisualDetails(key: FacetVisuals): VisualDetails {
+/*function getVisualDetails(key: FacetVisuals): VisualDetails {
   // prettier-ignore
   const uvTestArray = [
   1, 0.5,         0.5, 1,         0.5, 0.5, 
@@ -89,13 +91,14 @@ function getVisualDetails(key: FacetVisuals): VisualDetails {
         color: new Color("lightgray"),
       };
   }
-}
+}*/
 
 export function arrayWithOverwrittenRange(
   startIndex: number,
   length: number,
   data: number[],
-  replace = 0
+  replaceX = 0,
+  replaceY?: number
 ): number[] {
   if (startIndex + length > data.length) {
     throw new RangeError("attempt to overwrite non-existant data");
@@ -106,10 +109,17 @@ export function arrayWithOverwrittenRange(
   if (length < 0 || length % 1 != 0) {
     throw new TypeError("length must be a non-negative integer");
   }
-  return [...data].fill(replace, startIndex, startIndex + length);
-  // return data.map((value, index) =>
-  //   index >= startIndex && index < startIndex + length ? replace : value
-  // );
+  if (replaceY === undefined) {
+    return [...data].fill(replaceX, startIndex, startIndex + length);
+  } else {
+    return data.map((value, index) => {
+      if (index >= startIndex && index < startIndex + length) {
+        return index % 2 == 0 ? replaceX : replaceY;
+      } else {
+        return value;
+      }
+    });
+  }
 }
 
 const Facet = (props: FacetProps) => {
@@ -120,19 +130,31 @@ const Facet = (props: FacetProps) => {
     new Vector3(0.5, -0.5, 0.5),
     new Vector3(0.5, 0, 0),
   ];
-  const visuals = getVisualDetails(props.visual ?? FacetVisuals.TextureTest);
 
-  const uvMap = new BufferAttribute(new Float32Array(visuals.uvArray), 2);
+  // prettier-ignore
+  const uvRectArray = [
+    0, 0.5,       0.5, 1,         0, 1, 
+    1,0.293,      1,0.646,        0.5,0.293, 
+    0.5, 1,       0.5, 0.293,     1,0.646, 
+    1,0.646,      1,1,            0.5,1, 
+  ];
+
+  const uvMap = new BufferAttribute(new Float32Array(uvRectArray), 2);
   // Use 0,0 as the uv index for selected faces
   const uvSelectedFace = [0, 6, 12, 18].map(
     (value) =>
       new BufferAttribute(
-        new Float32Array(arrayWithOverwrittenRange(value, 6, visuals.uvArray)),
+        new Float32Array(arrayWithOverwrittenRange(value, 6, uvRectArray)),
         2
       )
   );
-  // Measurements and template at https://www.desmos.com/geometry/bb66bkq2ub
-  const [TextureMap] = useTexture([visuals.textureSource]);
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [getVisual, palette, highlightColor] = usePaletteStore(
+    (state) => [state.getVisual, state.palette, state.highlightColor],
+    shallow
+  );
+  const TextureMap = new CanvasTexture(getVisual(props.visualIndex)());
 
   const [selectedFace, setSelectedFace] = useState<undefined | number>(
     undefined
@@ -166,7 +188,7 @@ const Facet = (props: FacetProps) => {
       )}
     >
       <IrregularTetrahedronGeometry vertices={verticesOfTetra} />
-      <meshStandardMaterial color={visuals.color} map={TextureMap} />
+      <meshStandardMaterial map={TextureMap} />
     </mesh>
   );
 };
