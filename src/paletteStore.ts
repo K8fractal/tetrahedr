@@ -1,16 +1,19 @@
 import { Color } from "react-color";
-import { createJsxSelfClosingElement } from "typescript";
 import create from "zustand";
 
+//prettier-ignore
+type texturePattern = (highlightColor: Color) => (mainColor: Color) => (accentColor: Color) => 
+() => HTMLCanvasElement;
+
 interface Visual {
-  pattern: (
-    highlightColor: Color
-  ) => (mainColor: Color) => (accentColor: Color) => () => HTMLCanvasElement;
+  pattern: texturePattern;
   mainColor: Color;
   accentColor: Color;
 }
 
 export type colorPurpose = "MAIN" | "ACCENT" | "HIGHLIGHT";
+
+const patterns: texturePattern[] = [helperPattern, curriedLinearPattern];
 
 interface PaletteState {
   palette: Visual[];
@@ -23,11 +26,12 @@ interface PaletteState {
   addVisual: () => void;
   nextPaletteIndex: (paletteIndex: number) => number;
   //   resetPalette: () => void;
+  switchPattern: (index: number) => undefined;
 }
 
 export const usePaletteStore = create<PaletteState>()((set, get) => ({
   highlightColor: "#ffcc00",
-  palette: [{ pattern: helperPattern, mainColor: "blue", accentColor: "red" }],
+  palette: [{ pattern: patterns[0], mainColor: "blue", accentColor: "red" }],
   getVisual: (index: number) => {
     const visual = get().palette[index];
     return visual.pattern(get().highlightColor)(visual.mainColor)(
@@ -89,6 +93,20 @@ export const usePaletteStore = create<PaletteState>()((set, get) => ({
     set((state) => ({ palette: [...state.palette, newVisual] }));
   },
   nextPaletteIndex: (paletteIndex) => (paletteIndex + 1) % get().palette.length,
+  switchPattern: (index) => {
+    set((state) => ({
+      palette: replaceInImmutableArray(
+        {
+          pattern: patterns[1],
+          mainColor: state.palette[index].mainColor,
+          accentColor: state.palette[index].accentColor,
+        },
+        index,
+        state.palette
+      ),
+    }));
+    return undefined;
+  },
 }));
 
 function replaceInImmutableArray<T>(
@@ -144,8 +162,8 @@ function helperPattern(highlightColor: Color) {
 
           ctx.fillStyle = accentColor;
           ctx.beginPath();
-          ctx.ellipse(512, 362, 64, 64, 0, 0, 2 * Math.PI);
-          ctx.ellipse(1024, 724, 64, 64, 0, 0, 2 * Math.PI);
+          ctx.ellipse(512, 362, 71, 71, 0, 0, 2 * Math.PI);
+          ctx.ellipse(1024, 724, 71, 71, 0, 0, 2 * Math.PI);
           ctx.fill();
 
           ctx.beginPath();

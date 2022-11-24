@@ -3,17 +3,24 @@ import { ColorSelect } from "./ColorSelect";
 import { usePaletteStore } from "./paletteStore";
 
 export const PaletteSelector = () => {
-  const [getVisual, palette, highlightColor, makeColorSetter, addVisual] =
-    usePaletteStore(
-      (state) => [
-        state.getVisual,
-        state.palette,
-        state.highlightColor,
-        state.makeColorSetter,
-        state.addVisual,
-      ],
-      shallow
-    );
+  const [
+    getVisual,
+    palette,
+    highlightColor,
+    makeColorSetter,
+    addVisual,
+    switchPattern,
+  ] = usePaletteStore(
+    (state) => [
+      state.getVisual,
+      state.palette,
+      state.highlightColor,
+      state.makeColorSetter,
+      state.addVisual,
+      state.switchPattern,
+    ],
+    shallow
+  );
 
   return (
     <div className="paletteBar">
@@ -32,6 +39,9 @@ export const PaletteSelector = () => {
               <img
                 src={getVisual(index)().toDataURL()}
                 className="previewImage"
+                onClick={() => {
+                  switchPattern(index);
+                }}
               />
             }
           </div>
