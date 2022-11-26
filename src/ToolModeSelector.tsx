@@ -25,6 +25,13 @@ export const ToolModeSelector = (props: RadioGroupProps) => {
     <div className="iconBar">
       <div className="radioBar">
         <RadioSelect
+          label="Paint"
+          iconSource="iconPaint.svg"
+          group="mode"
+          // selected={mode == "paint"}
+          // onChange={()=>{setMode("paint")}}
+        />
+        <RadioSelect
           label="Add"
           iconSource="iconAdd.svg"
           group="mode"
