@@ -30,7 +30,7 @@ export const PaletteSelector = () => {
           colorEffect={makeColorSetter("HIGHLIGHT")}
           initialColor={highlightColor}
         />
-        <p className="footnote">mouseover</p>
+        <p className="footnote">Mouseover</p>
       </div>
       {palette.map((visual, index) => (
         <div className="visualSelector" key={`paletteItem${index}`}>

@@ -105,6 +105,9 @@ export const FacetStructure = (props: Record<string, never>) => {
           ...facets.slice(0, facetIndex),
           ...facets.slice(facetIndex + 1),
         ]);
+        return;
+      case "paint":
+        paintFacet(facetIndex, nextVisual(facet.visualIndex));
     }
   };
 

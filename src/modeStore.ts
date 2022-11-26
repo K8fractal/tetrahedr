@@ -1,6 +1,6 @@
 import create from "zustand";
 
-export type Mode = "remove" | "add";
+export type Mode = "remove" | "add" | "paint";
 
 interface ModeState {
   mode: Mode;
