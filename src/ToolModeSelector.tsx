@@ -10,6 +10,8 @@ const toolTip = (mode: Mode): string => {
       return "Click on face to add.";
     case "remove":
       return "Click to remove.";
+    case "paint":
+      return "Click to change style.";
     default:
       return "";
   }
@@ -17,7 +19,6 @@ const toolTip = (mode: Mode): string => {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const ToolModeSelector = (props: RadioGroupProps) => {
-  //const [mode, setMode] = useState("add");
   const mode = useModeStore((state) => state.mode);
   const setMode = useModeStore((state) => state.setMode);
 
@@ -28,8 +29,10 @@ export const ToolModeSelector = (props: RadioGroupProps) => {
           label="Paint"
           iconSource="iconPaint.svg"
           group="mode"
-          // selected={mode == "paint"}
-          // onChange={()=>{setMode("paint")}}
+          selected={mode == "paint"}
+          onChange={() => {
+            setMode("paint");
+          }}
         />
         <RadioSelect
           label="Add"
@@ -52,7 +55,7 @@ export const ToolModeSelector = (props: RadioGroupProps) => {
       </div>
       <p>{toolTip(mode)}</p>
       <p className="mobileHide">Right click to change style.</p>
-      <p className="mobileShow">Press and hold for style</p>
+      {/* <p className="mobileShow">Press and hold for style</p> */}
     </div>
   );
 };
